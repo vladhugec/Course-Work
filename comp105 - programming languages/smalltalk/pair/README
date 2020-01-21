@@ -1,0 +1,18 @@
+Name: Vladimir Hugec
+Partner: None
+
+I used the template code from the spec for LargeInteger
+I talked to one TA but Im ashamed to say I completely forgot his name
+
+Parts of assignment completed:
+    I have not completed the LargeNegativeInt nor SmallInt sections
+    
+How I tested bignum:
+
+    At first I created unit tests at the end of bignum.smt then ran
+    usmalltalk -q < bignum.smt
+    but then I was recommended by Norman Ramsey to use:
+    echo '(use bignum.smt) (use bigtest.smt)' | usmalltalk -q
+    I tested sequentially, once I finished NatZero, I moved on to Natnonzero
+
+ 

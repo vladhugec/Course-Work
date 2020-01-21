@@ -1,0 +1,27 @@
+Mason Pollack and Vladimir Hugec
+
+Help: n/a
+
+Longest routine: Seq_get
+        The assembly code that goes along with Seq_get cannot be improved.
+        Due to the data structure, the assembly code must do a great deal of
+        work dereferencing and finding values for pointers. The assembly code
+        does this in an efficient way. However, the assembly code could be
+        improved by not using a Sequence. This would result in less dereference
+        of pointers and a more direct and fast access to the data. This can be
+        illustrated by the extreme amount of statements that are moving vals
+        from an address onto another register. When the sequence passes all of 
+        the assertion and if statements, it gets to a point where the machine
+        code calls movv 0x8(%rbp),%rax an does very similar instructions due to
+        having to get values by adding numbers to a pointer, and then storing
+        these values in registers. This needs to happen many times to get values
+        which ultimately makes the program go slower. If an array was used, 
+        to get the element, a mov would only need to be used once to arrive in 
+        the address where the value is stored for that portion of the array.
+        In this case, the assembly code is efficient for the c code that is
+        written and cannot be improved, despite this, simpler data structures
+        could be used to increase speed.
+
+Time spent analyzing problems: 8 hrs
+
+Time spent solving problems: 20 hrs

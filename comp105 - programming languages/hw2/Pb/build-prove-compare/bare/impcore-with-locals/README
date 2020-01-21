@@ -1,0 +1,15 @@
+README
+COMP 105 - Opsem Assignment - Pair
+
+Name: Vladimir Hugec
+Partner: None
+
+To solve this problem I decided to create a new parameter to pass into eval(..)
+named 'locals,' when locals are declared within a userdefined function, in the
+same way the parameter formals was formed, the locals parameter is built from
+the namelist and valuelist. I loop through each variable in the namelist and
+build a corresponding valuelist setting each value to 0. I pass the construction
+to eval(..)
+For the VAR and SET sections I needed to add lines creating and binding local
+variables in the same was the formals are created and bound.
+

@@ -1,0 +1,16 @@
+NAME: Vladimir Hugec
+Partner for assignment: none:/
+
+I recieved help from Noah directly (portion noted w/ comments)
+
+I chose recursion for the print module because it seemed the most
+intuitive for me, I split a number into its digit components (stored
+on top of stack) and then loop through and print them
+
+Hrs analyzing assignment: ~3
+
+Hrs writing assembly code: ~9
+
+Hrs debugging code: ~5
+
+Total hrs: ~17

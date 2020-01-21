@@ -1,0 +1,118 @@
+Vladimir Hugec
+1/26/18
+HW1
+
+
+Written #0:
+  	Vim - it works I guess. I might just be stupid but I wrote a few lines
+	 code and then I found out I didn't know how to leave Vim,
+	 so I googled it,and tried again, still couldn't exit,
+	 so not using Vim again...I also don't see the point of the squiggles
+	 on the side...garbage. On the otherhand if you like a clean look with
+	 no help or options then I guess Vim is good. Maybe once I'm better
+	 I'll come back to this one.
+
+	Emacs - I wrote my code, saved it, and left succesfully, will use
+	again!! Also there were no stupid squiggles, just a blank page to
+	write on, and did I mention that the save command actually worked,
+	unlike vim... On the otherhand, I definitly still prefer the 
+	simplicity of nano and as of right now I see no reason to change
+	away from nano. Again maybe once I understand the basics enough,
+	nano will no longer suit me because of its limitations, but as of
+	right now I will continue using nano.
+
+	SublimeText - Great, nice colors, easy to read, easy to save, the 
+	Apple of text editors, too bad it doesnt run on the server, will use
+	again!!	
+
+
+Written #1: Pseudocode - PB&J
+
+	Assume: All ingredients are already present infront of the robot
+	Assume: Leaving a mess is okay
+
+	1. Open bread bag
+	2. If bread is sliced then remove two slices from the bag, move to
+		step 5
+	3. If bread is unsliced then grab knife
+	4. Use knife to slice two half inch slices from bread 
+	5. Place bread slices side by side in lateral orientation
+	6. Get jar of peanut butter and remove the lid
+	7. Place lid on the side of the table
+	8. Get and hold a spoon
+	9. Hold spoon on the thin end
+	10. If the opposite end of the spoon from the side being held is
+	    correctly concave up, move to step 12
+	11. Rotate spoon 180 degrees around z-axis
+	12. Use non held spoon end to reach into the jar and remove one 
+           spoonful of peanut butter from jar
+	13. Move the spoon above the left slice of bread
+	14. Turn spoon upside down and drop peanut butter on left slice of
+	    bread
+	15. If peanut butter drops onto slice of bread, move to step 16
+	16. Get and hold knife
+	17. Use knife to scrape peanut butter from the spoon onto knife
+	18. Use knife to spread peanut butter onto slice of bread evenly over
+	    the whole visible side of the bread
+	19. Replace spoon in hand with a knife
+	20. Use knife to evenly spread peanut butter over the whole visible
+	    side of the slice of bread
+	21. Get jar of Jelly and remove the lid
+	22. Place lid on the side of the table
+	23. Get and hold a new spoon
+	24. If the opposite end of the spoon is correctly held concave up,
+	    move to step 26
+	25. Rotate spoon 180 degrees about its z-axis
+	26. Use spoon to remove one spoonful of jelly from the jar of jelly
+	27. Move spoon to above the slice of bread on the right
+	28. Turn spoon upside down and drop jelly from the spoon a top the
+	    slice of bread
+	29. Replace spoon in hand with new knife
+	30. Use knife to evenly spread the jelly over the whole visible side
+	    of the slice of bread
+	31. Remove knife from hand
+	32. Pick up a slice of bread
+	33. Move it above the other slice of bread
+	34. Rotate bread 180 degrees on its z-axis
+	35. Place rotated bread atop unrotated bread still on table
+	36. Feast 
+
+
+Written #2: Pseudocode yoda.py
+
+	- Ask user to input of four words seperated by a space and store
+          string in a variable named 'notyoda'
+	- Split the sting stored in 'notyoda' at each word seperation
+	  indicated by a space in the user input and store the result in a
+	  variable named 'notyetyoda'
+	- Convert variable 'notyetyoda' into a list and reverse the order of
+	  that list, then store the result in a variable named 'nearlyyoda'
+	- Create variable named 'yoda' with initial value of null
+	- For each string in list 'nearlyyoda'
+		- Append each string in list stored in the 'nearlyyoda' variable
+ 		  to the variable 'yoda' until all stings in list have been
+                  appended to the variable 'yoda'
+	- Print the variable yoda
+
+
+Written #3 - Bugs and problems and how I dealt
+
+	In the Programming #4 section where you are asked to calculate the 
+	exact amount of change in a user inputed number of cents, I ran into
+	a few logic problems that I couldn't figure out. For example, the
+	first program I wrote to solve this problem would just ignore pennies.
+	I knew why almost immedietly after I looked back at my program, but 
+	the way my program was structured, it was impossible to fix the bug.
+	I didn't know that at the time and so I spent a solid 15-20 minutes
+	hopelessly trying to fix the last segment of my program, the one that
+	counted the pennies. All of a sudden I realized my mistake, it was in
+	the way I went about counting the denominations. No matter what the
+	program would never even reach the part when it should calculate 
+	pennies because by that point there was no change left to be
+	disperesed. I just ignored remainders throughout the program and so it
+	would never accurately count up the last amount of cents:(
+	I deleted my entire program, cursed myself for wasting so much time
+	on such a dumb problem, rewrote the entire program from scratch and
+	learned a valuable lesson: If you start a program incorrectly and
+	don't think through all the implications of each line, you'll need to
+	start all over again. I won't let myself come to that point again.	

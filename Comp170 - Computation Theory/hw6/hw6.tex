@@ -1,0 +1,143 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 170, Fall 2019
+% Homework 5
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 170}
+\def\subjname{Computation Theory}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 6}
+
+\section{}
+
+Input: $01 \# 01$
+
+
+$q_{1} 01 \# 01$
+
+$x q_{2} 1 \# 01$
+
+$x1 q_{2} \# 01$
+
+$x1 \# q_{4} 01$
+
+$x1 q_{6} \# x1$
+
+$x q_{7} 1 \# x1$
+
+$q_{7} x1 \# x1$
+
+$x q_{1} 1 \# x1$
+
+$xx q_{3} \# x1$
+
+$xx \# q_{5} x1$
+
+$xx \# x q_{5} 1$
+
+$xx \# q_{6} xx$
+
+$xx q_{6} \# xx$
+
+$x q_{7} x \# xx$
+
+$xx q_{1} \# xx$
+
+$xx \# q_{8} xx$
+
+$xx \# x q_{8} x$
+
+$xx \# xx q_{8}$
+
+$xx \# xx q_{accept}$
+
+\pagebreak
+
+Input: $00 \# 0$
+
+$q_{1} 00\#0$
+
+$x q_{2} 0\#0$
+
+$x0 q_{2} \#0$
+
+$x0\# q_{4} 0$
+
+$x0 q_{6} \#x$
+
+$x q_{7} 0\#x$
+
+$q_{7} x0\#x$
+
+$x q_{1} 0\#x$
+
+$xx q_{2} \#x$
+
+$xx\# q_{4} x$
+
+$xx\#x q_{4}$
+
+$xx\#x q_{reject}$
+
+\pagebreak
+
+\section{}
+
+The extra movements for a Turing machine: stay, double left, and double right, are no more powerful than a Turing machine with only the options to move left and right since those extra movements are in reality just extensions of the original left and right movements. For example, the new stay option can be simulated by a left movement followed by a right movement or a right movement by a left movement depending on implementation, and double left and double right are simply two consecutive left and right movements. So in reality, the new Turing machine with the extra movement options is no more powerful than the stock Turing machine. In order to simulate these extra movements, we simply need to add another transition state that move the tape head the extra movement necessary. For the transition $\delta(q_{start},x) \rightarrow \delta(q_{2}, y, S)$ we add the intermediary $q_{i}$ to simulate the transition by moving the head at first to the right or left, then in the opposite direction of the first one used. I will use right. So the transition now becomes $\delta(q_{start},x) \rightarrow \delta(q_{i}, y, R) \rightarrow \delta(q_{2}, x, L)$. The exact same procedure is done for double left and double right. Therefore these extra movements are no more powerful than just using the normal ones since they can be easily replicated by the normal ones.
+
+\pagebreak
+
+\section{}
+
+Since we know that for any DFA $D$, we can construct another that accepts the complement language and for any DFA’s $D_{1}$ and $D_{2}$, we can construct others that accept the union and intersection of those languages. To show, $L(A) \subset L(B)$ is decidable, we can construct a TM $M$ that decides $L(A) \subset L(B)$. Using the first fact above, since for $L(A)$ to be a proper subset of $L(B)$, the intersection of $L(A)$ and $L(B)$ should contain all of $L(A)$ but only a part of $L(B)$. Therefore if we have a string $w$, that accepts in $L(A) \cap L(B)$ then it must have been in $L(A)$ and vice-versa.
+
+$M = $ "On input $\langle A, w \rangle$, where $A$ is a $L(A)\cap L(B)$ and $w$ is a string."
+
+1. Simulate $A$ on input $w$
+
+2. If A accepts then accept, if A rejects then reject.
+
+
+\enddocument
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

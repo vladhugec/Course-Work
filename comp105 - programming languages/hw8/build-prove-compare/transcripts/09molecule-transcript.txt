@@ -1,0 +1,21 @@
+-> (val a (IntArray.new 4 99))
+[99 99 99 99] : (@m Array Int).t
+-> (define int smallest-int ([a : IntArray.t])
+     (let ([smallest (IntArray.at a 0)]
+           [i 1]
+           [n (IntArray.size a)])
+        (while (Int.< i n)
+           (if (Int.< (IntArray.at a i) smallest)
+             (set smallest (IntArray.at a i))
+             (begin))
+           (set i (Int.+ i 1)))
+        smallest))
+smallest-int : ((@m Array Int).t -> Int.t)
+-> a
+[99 99 99 99] : (@m Array Int).t
+-> (smallest-int a)
+99 : Int.t
+-> (IntArray.at-put a 1 33)
+-> (IntArray.at-put a 2 55)
+-> (smallest-int a)
+33 : Int.t

@@ -1,0 +1,715 @@
+-> (cons 'a '())
+(a)
+-> (cons 'a '(b))
+(a b)
+-> (cons '(a) '(b))
+((a) b)
+-> (cdr '(a (b (c d))))
+((b (c d)))
+-> (car '(a (b (c d))))
+a
+-> (null? '())
+#t
+-> (null? '(()))
+#f
+-> (define length (xs)
+     (if (null? xs)
+         0
+         (+ 1 (length (cdr xs)))))
+-> (length '(a b))
+2
+-> (append '(moon over) '(miami vice))
+(moon over miami vice)
+-> (define simple-reverse (xs)
+     (if (null? xs)
+        xs
+        (append (simple-reverse (cdr xs)) (list1 (car xs)))))
+-> (simple-reverse '(my bonny lies over))
+(over lies bonny my)
+-> (simple-reverse '(a b (c d) e))
+(e (c d) b a)
+-> (reverse '(the atlantic ocean))
+(ocean atlantic the)
+-> (define seq (m n)
+     (if (> m n) '() (cons m (seq (+ 1 m) n))))
+-> (seq 3 7)
+(3 4 5 6 7)
+-> (define divides? (p n) (= (mod n p) 0))
+-> (define remove-multiples (p ns)
+     (if (null? ns)
+       '()
+       (if (divides? p (car ns))
+         (remove-multiples p (cdr ns))
+         (cons (car ns) (remove-multiples p (cdr ns))))))
+-> (remove-multiples 2 '(2 3 4 5 6 7))
+(3 5 7)
+-> (define find-primes-in (ns)
+     (if (null? ns)
+       '()
+       (cons (car ns) (find-primes-in (remove-multiples (car ns) (cdr ns))))))
+-> (define primes<= (n) (find-primes-in (seq 2 n)))
+-> (primes<= 10)
+(2 3 5 7)
+-> (primes<= 50)
+(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47)
+-> (define has? (sx a)
+     (if (atom? sx)
+         (= sx a)
+         (or (has? (car sx) a) (has? (cdr sx) a))))
+-> (val pangrams         ;; www.rinkworks.com/words/pangrams.shtml, June 2018
+     '((We promptly judged antique ivory buckles for the next prize.)
+       (The quick red fox jumps over a lazy brown dog.)
+       (Amazingly few discotheques provide jukeboxes.)
+       (Heavy boxes perform quick waltzes and jigs.)
+       (Pack my box with five dozen liquor jugs.)))
+-> (has? pangrams 'fox)
+#t
+-> (has? pangrams 'box)
+#t
+-> (has? pangrams 'cox)
+#f
+-> (equal? 'a 'b)
+#f
+-> (equal? '(a (1 3) c) '(a (1 3) c))
+#t
+-> (equal? '(a (1 3) d) '(a (1 3) c))
+#f
+-> (equal? '(a b c) '(a b))
+#f
+-> (equal? #f #f)
+#t
+-> (define insert (m sorted)
+     (if (null? sorted)
+       (list1 m)
+       (if (< m (car sorted))
+         (cons m sorted)
+         (cons (car sorted) (insert m (cdr sorted))))))
+-> (define insertion-sort (ns)
+     (if (null? ns)
+       '()
+       (insert (car ns) (insertion-sort (cdr ns)))))
+-> (insertion-sort '(4 3 2 6 8 5))
+(2 3 4 5 6 8)
+-> (val emptyset '())
+-> (define member? (x s)
+     (if (null? s)
+       #f
+       (if (equal? x (car s))
+         #t
+         (member? x (cdr s)))))
+-> (define add-element (x s)
+     (if (member? x s)
+       s
+       (cons x s)))
+-> (define size (s)
+     (if (null? s)
+       0
+       (+ 1 (size (cdr s)))))
+-> (define union (s1 s2)
+     (if (null? s1)
+       s2
+       (add-element (car s1) (union (cdr s1) s2))))
+-> (val s (add-element 3 (add-element 'a emptyset)))
+(3 a)
+-> (member? 'a s)
+#t
+-> (union s (add-element 2 (add-element 3 emptyset)))
+(a 2 3)
+-> (val t (add-element '(a b) (add-element 1 emptyset)))
+((a b) 1)
+-> (member? '(a b) t)
+#t
+-> (val al (bind 'I 'Ching '()))
+((I Ching))
+-> (val al (bind 'E 'coli al))
+((I Ching) (E coli))
+-> (val al (bind 'I 'Magnin al))
+((I Magnin) (E coli))
+-> (find 'I al)
+Magnin
+-> (val aisles (bind 'eggnog 'dairy '()))
+((eggnog dairy))
+-> (val aisles (bind 'apple 'produce aisles))
+((eggnog dairy) (apple produce))
+-> (val aisles (bind 'carrot 'produce aisles))
+((eggnog dairy) (apple produce) (carrot produce))
+-> (val aisles (bind 'butter 'dairy aisles))
+((eggnog dairy) (apple produce) (carrot produce) (butter dairy))
+-> (val aisles (bind 'shredded-wheat 'cereal aisles))
+((eggnog dairy) (apple produce) (carrot produce) (butter dairy) (shredded-wheat cereal))
+-> (find 'carrot aisles)
+produce
+-> (find 'butter aisles)
+dairy
+-> (find 'milk aisles)
+()
+-> (val fruits 
+     '((apple  ((texture crunchy) (color green)))
+       (banana ((texture mushy)   (color yellow)))
+       (cherry ((texture firm)    (color red)))))
+-> (define property (k p plist)
+     (find p (find k plist)))
+-> (define set-property (k p a plist)
+     (bind k (bind p a (find k plist)) plist))
+-> (property 'apple 'texture fruits)
+crunchy
+-> (set fruits (set-property 'apple 'color 'red fruits))
+-> (property 'apple 'color fruits)
+red
+-> (define has-property (p a alist) (= (find p alist) a))
+-> (define gather-property (p a plist)
+     (if (null? plist)
+       '()
+       (if (has-property p a (alist-first-attribute plist))
+         (cons (alist-first-key plist) (gather-property p a (cdr plist)))
+         (gather-property p a (cdr plist)))))
+-> (set fruits (set-property 'lemon 'color 'yellow fruits))
+-> (gather-property 'color 'yellow fruits)
+(banana lemon)
+-> (define sqrt (n)
+     (letrec ((find (lambda (r)
+                      (if (> (* r r) n) (- r 1) (find (+ r 1))))))
+       (find 0)))
+-> (define roots (a b c)
+     (let ([minus-b      (- 0 b)]
+           [discriminant (sqrt (- (* b b) (* 4 (* a c))))]
+           [two-a        (* 2 a)])
+       (list2 (/ (+ minus-b discriminant) two-a)
+              (/ (- minus-b discriminant) two-a))))
+-> (roots 1 3 -70)
+(7 -10)
+-> (val x 'global-x)
+-> (val y 'global-y)
+-> (let
+     ([x 'local-x]
+      [y x])
+     (list2 x y))
+(local-x global-x)
+-> (val x 'global-x)
+-> (val y 'global-y)
+-> (let*
+     ([x 'local-x]
+      [y x])
+     (list2 x y))
+(local-x local-x)
+-> (val even?
+     (letrec
+       ([odd-test (lambda (n) (not (even-test n)))]
+        [even-test
+          (lambda (n)
+            (if (= n 0)
+              #t
+              (odd-test (- n 1))))])
+       even-test))
+-> (even? 0)
+#t
+-> (even? 1)
+#f
+-> (even? 2)
+#t
+-> (define make-internal-node (label left right)
+     (list3 label left right))
+-> (define internal-node? (x)
+     (if (pair? x)
+         (if (pair? (cdr x))
+             (if (pair? (cddr x))
+                 (null? (cdddr x))
+                 #f)
+             #f)
+         #f))
+-> (define internal-node-left  (node) (cadr  node))
+-> (define internal-node-right (node) (caddr node))
+-> (define internal-node-label (node) (car node))
+-> (check-assert (internal-node? (make-internal-node 'A 'B 'C)))
+-> (check-assert (not (internal-node? (list2 1 2))))
+-> (check-assert (not (internal-node? (list4 1 2 3 4))))
+-> (check-assert (not (internal-node? 'A)))
+-> (check-expect (internal-node-label (make-internal-node 'A 'B 'C)) 'A)
+-> (check-expect (internal-node-left  (make-internal-node 'A 'B 'C)) 'B)
+-> (check-expect (internal-node-right (make-internal-node 'A 'B 'C)) 'C)
+-> (define leaf? (t) (not (internal-node? t)))
+-> (define label (t)             ; consumes abstract BINTREE(ATOM)
+     (if (leaf? t) t (internal-node-label t)))
+-> (define preorder (t)
+     (cons
+       (label t)
+       (if (leaf? t)
+         '()
+         (append
+           (preorder (internal-node-left t))
+           (preorder (internal-node-right t))))))
+-> (preorder
+      (make-internal-node 'A
+         (make-internal-node 'B
+             'C
+             'D)
+         (make-internal-node 'E
+             (make-internal-node 'F
+                                    'G
+                                    'H)
+             'I)))
+(A B C D E F G H I)
+-> (val emptyqueue '())
+-> (define front         (q) (car q))
+-> (define without-front (q) (cdr q))
+-> (define enqueue (t q)
+     (if (null? q)
+       (list1 t)
+       (cons (car q) (enqueue t (cdr q)))))
+-> (define empty? (q) (null? q))
+-> (define level-order* (queue)
+     (if (empty? queue)
+       '()
+       (let* ([hd   (front         queue)]
+              [tl   (without-front queue)]
+              [newq (if (leaf? hd)
+                       tl
+                       (enqueue (internal-node-right hd)
+                                (enqueue (internal-node-left hd) tl)))])
+         (cons (label hd) (level-order* newq)))))
+-> (define level-order (t)
+     (level-order* (enqueue t emptyqueue)))
+-> (level-order
+      (make-internal-node 'A
+         (make-internal-node 'B
+                                 'C
+                                 'D)
+         (make-internal-node 'E
+             (make-internal-node 'F
+                                    'G
+                                    'H)
+                                 'I)))
+(A B E C D F I G H)
+-> (define level-order* (queue)
+     (if (empty? queue)
+       '()
+       (let* ([hd    (front         queue)]
+              [queue (without-front queue)]
+              [queue (if (leaf? hd)
+                       queue
+                       (enqueue (internal-node-right hd) (enqueue (internal-node-left hd) queue)))])
+         (cons (label hd) (level-order* queue)))))
+-> (define level-order (t)
+     (level-order* (enqueue t emptyqueue)))
+-> (level-order
+      (make-internal-node 'A
+         (make-internal-node 'B
+                                 'C
+                                 'D)
+         (make-internal-node 'E
+             (make-internal-node 'F
+                                    'G
+                                    'H)
+                                 'I)))
+(A B E C D F I G H)
+-> ((lambda (x y) (+ (* x x) (* y y))) 3 4)
+25
+-> ((lambda (x y) (+ (* x x) (* y y))) 707 707)
+999698
+-> ((lambda (x y z) (+ x (+ y z))) 1 2 3)
+6
+-> ((lambda (y) (* y y)) 7)
+49
+-> (define apply-n-times (n f x)
+     (if (= 0 n)
+       x
+       (apply-n-times (- n 1) f (f x))))
+-> (define twice  (n) (* 2 n))
+-> (define square (n) (* n n))
+-> (apply-n-times 2 twice 10)
+40
+-> (apply-n-times 2 square 10)
+10000
+-> (apply-n-times 10 twice 1)
+1024
+-> (apply-n-times 10 square 1)
+1
+-> (val add (lambda (x) (lambda (y) (+ x y))))
+-> (val add1 (add 1))
+-> (add1 4)
+5
+-> (val counter-from
+     (lambda (x)
+        (lambda () (set x (+ x 1)))))
+-> (val ten (counter-from 10))
+<procedure>
+-> (ten)
+11
+-> (ten)
+12
+-> (ten)
+13
+-> (val resettable-counter-from
+     (lambda (n)                       ; create a counter
+        (list2
+          (list2 'step  (lambda () (set n (+ n 1))))
+          (list2 'reset (lambda () (set n 0))))))
+-> (record counter (step reset))
+-> (val counter-from
+     (lambda (n)                       ; create a counter
+        (make-counter (lambda () (set n (+ n 1)))
+                      (lambda () (set n 0)))))
+-> (val step  (lambda (counter) ((find 'step  counter))))
+-> (val reset (lambda (counter) ((find 'reset counter))))
+-> (val hundred (resettable-counter-from 100))
+-> (val twenty  (resettable-counter-from 20))
+-> (step hundred)
+101
+-> (step hundred)
+102
+-> (step twenty)
+21
+-> (reset hundred)
+0
+-> (step hundred)
+1
+-> (step twenty)
+22
+-> (val hundred (counter-from 100))
+-> (val twenty  (counter-from 20))
+-> (val step  (lambda (counter) ((counter-step counter))))
+-> (val reset (lambda (counter) ((counter-reset counter))))
+-> (step hundred)
+101
+-> (step hundred)
+102
+-> (step twenty)
+21
+-> (reset hundred)
+0
+-> (step hundred)
+1
+-> (step twenty)
+22
+-> (val arand (lambda (seed) (mod (+ (* seed 9) 5) 1024)))
+-> (val make-irand (lambda (arng seed)
+                     (lambda () (set seed (arng seed)))))
+-> (val irand (make-irand arand 1))
+-> (irand)
+14
+-> (irand)
+131
+-> (irand)
+160
+-> (val repeatable-irand (make-irand arand 1))
+-> (repeatable-irand)
+14
+-> (irand)
+421
+-> (define even? (n) (= 0 (mod n 2)))
+-> (val odd? (o not even?))
+-> (odd? 3)
+#t
+-> (odd? 4)
+#f
+-> (val list3-curried (lambda (a) (lambda (b) (lambda (c) (list3 a b c)))))
+-> (list3-curried 'x)
+<procedure>
+-> ((list3-curried 'x) 'y)
+<procedure>
+-> (((list3-curried 'x) 'y) 'z)
+(x y z)
+-> (list3-curried 'a)
+<procedure>
+-> (it 'b)
+<procedure>
+-> (it 'c)
+(a b c)
+-> (val <-curried (lambda (n) (lambda (m) (< n m))))
+-> (val positive? (<-curried 0))
+-> (positive? 0)
+#f
+-> (positive? 8)
+#t
+-> (positive? -3)
+#f
+-> (val zero? ((curry =) 0))
+-> (zero? 0)
+#t
+-> (val add1 ((curry +) 1))
+-> (add1 4)
+5
+-> (val new+ (uncurry (curry +)))
+-> (new+ 1 4)
+5
+-> (define even? (x) (= (mod x 2) 0))
+-> (filter even? '(1 2 3 4 5 6 7 8 9 10))
+(2 4 6 8 10)
+-> (exists? even? '(1 2 3 4 5 6 7 8 9 10))
+#t
+-> (all? even? '(1 2 3 4 5 6 7 8 9 10))
+#f
+-> (all? even? (filter even? '(1 2 3 4 5 6 7 8 9 10)))
+#t
+-> (exists? even? (filter (o not even?) '(1 2 3 4 5 6 7 8 9 10)))
+#f
+-> (exists? even? '())
+#f
+-> (all? even? '())
+#t
+-> (map add1 '(3 4 5))
+(4 5 6)
+-> (map ((curry +) 5) '(3 4 5))
+(8 9 10)
+-> (map (lambda (x) (* x x)) '(1 2 3 4 5 6 7 8 9 10))
+(1 4 9 16 25 36 49 64 81 100)
+-> (primes<= 20)
+(2 3 5 7 11 13 17 19)
+-> (map ((curry <) 10) (primes<= 20))
+(#f #f #f #f #t #t #t #t)
+-> (foldl - 0 '(1 2 3 4))
+2
+-> (foldr - 0 '(1 2 3 4))
+-2
+-> (define alt-all? (p? xs) (not (exists? (o not p?) xs)))
+-> (alt-all? even? '(1 2 3 4 5 6 7 8 9 10))
+#f
+-> (alt-all? even? '())
+#t
+-> (alt-all? even? (filter even? '(1 2 3 4 5 6 7 8 9 10)))
+#t
+-> (val emptyset '())
+-> (define member?      (x s) (exists? ((curry equal?) x) s))
+-> (define add-element  (x s) (if (member? x s) s (cons x s)))
+-> (define union      (s1 s2) (foldl add-element s1 s2))
+-> (define set-of-list   (xs) (foldl add-element '() xs))
+-> (set-of-list '(a b c x y a))
+(y x c b a)
+-> (union '(1 2 3 4) '(2 4 6 8))
+(8 6 1 2 3 4)
+-> (define sub-alist? (al1 al2)
+      ; all of al1's pairs are found in al2
+      (all? (lambda (pair)
+                (equal? (alist-pair-attribute pair)
+                        (find (alist-pair-key pair) al2)))
+            al1))
+-> (define =alist? (al1 al2)
+      (if (sub-alist? al1 al2) (sub-alist? al2 al1) #f))
+-> (=alist? '() '())
+#t
+-> (=alist? '((E coli)(I Magnin)(U Thant))
+            '((E coli)(I Ching)(U Thant)))
+#f
+-> (=alist? '((U Thant)(I Ching)(E coli))
+            '((E coli)(I Ching)(U Thant)))
+#t
+-> (val specialized-set-ops (lambda (my-equal?)
+      (list2
+         (list2 'member?
+                (lambda (x s) (exists? ((curry my-equal?) x) s)))
+         (list2 'add-element 
+                (lambda (x s) ; add-element
+                  (if (exists? ((curry my-equal?) x) s) s (cons x s)))))))
+-> (val list-of-al-ops (specialized-set-ops =alist?))
+-> (val al-member?     (find 'member?     list-of-al-ops))
+-> (val al-add-element (find 'add-element list-of-al-ops))
+-> (val emptyset '())
+-> (val s (al-add-element '((U Thant)(I Ching)(E coli)) emptyset))
+(((U Thant) (I Ching) (E coli)))
+-> (val s (al-add-element '((Hello Dolly)(Goodnight Irene)) s))
+(((Hello Dolly) (Goodnight Irene)) ((U Thant) (I Ching) (E coli)))
+-> (val s (al-add-element '((E coli)(I Ching)(U Thant)) s))
+(((Hello Dolly) (Goodnight Irene)) ((U Thant) (I Ching) (E coli)))
+-> (al-member? '((Goodnight Irene)(Hello Dolly)) s)
+#t
+-> (define mk-insertion-sort (lt?)
+     (letrec ([insert (lambda (x xs)
+                        (if (null? xs)
+                            (list1 x)
+                            (if (lt? x (car xs))
+                                (cons x xs)
+                                (cons (car xs) (insert x (cdr xs))))))]
+              [sort   (lambda (xs)
+                        (if (null? xs)
+                            '()
+                            (insert (car xs) (sort (cdr xs)))))])
+       sort))
+-> (val sort-increasing (mk-insertion-sort <))
+-> (val sort-decreasing (mk-insertion-sort >))
+-> (sort-increasing '(6 9 1 7 4 3 8 5 2 10))
+(1 2 3 4 5 6 7 8 9 10)
+-> (sort-decreasing '(6 9 1 7 4 3 8 5 2 10))
+(10 9 8 7 6 5 4 3 2 1)
+-> (define pair< (p1 p2)
+     (if (!= (car p1) (car p2))
+         (< (car p1) (car p2))
+         (< (cadr p1) (cadr p2))))
+-> ((mk-insertion-sort pair<) '((4 5) (2 9) (3 3) (8 1) (2 7)))
+((2 7) (2 9) (3 3) (4 5) (8 1))
+-> (define find-c (key alist success-cont failure-cont)
+      (letrec
+          ([search (lambda (alist)
+                      (if (null? alist)
+                          (failure-cont)
+                          (if (equal? key (alist-first-key alist))
+                              (success-cont (alist-first-attribute alist))
+                              (search (cdr alist)))))])
+        (search alist)))
+-> (find-c 'Hello '((Hello Dolly) (Goodnight Irene))
+           (lambda (v) (list2 'the-answer-is v))
+           (lambda ()  'the-key-was-not-found))
+(the-answer-is Dolly)
+-> (find-c 'Goodbye '((Hello Dolly) (Goodnight Irene))
+           (lambda (v) (list2 'the-answer-is v))
+           (lambda ()  'the-key-was-not-found))
+the-key-was-not-found
+-> (define find-default (key table default)
+      (find-c key table (lambda (x) x) (lambda () default)))
+-> (define freq (words)
+     (let
+         ([add (lambda (word table)
+                   (bind word (+ 1 (find-default word table 0)) table))]
+          [sort (mk-insertion-sort (lambda (p1 p2) (> (cadr p1) (cadr p2))))])
+       (sort (foldr add '() words))))
+-> (freq '(it was the best of times , it was the worst of times ! ))
+((it 2) (was 2) (the 2) (of 2) (times 2) (best 1) (, 1) (worst 1) (! 1))
+-> (define followers (words)
+     (letrec
+         ([add (lambda (word follower table)
+                   (bind word
+                         (add-element follower (find-default word table '()))
+                         table))]
+          [walk (lambda (first rest table)
+                  (if (null? rest)
+                      table
+                      (walk (car rest) (cdr rest) (add first (car rest) table))))])
+       (walk (car words) (cdr words) '())))
+-> (followers '(it was the best of times , it was the worst of times ! ))
+((it (was)) (was (the)) (the (worst best)) (best (of)) (of (times)) (times (! ,)) (, (it)) (worst (of)))
+-> (define more-than-one? (xs)
+     (if (null? xs)
+         #f
+         (not (null? (cdr xs)))))
+   (check-assert (more-than-one? '(a b)))
+   (check-assert (more-than-one? '(a b c)))
+   (check-assert (not (more-than-one? '(a))))
+   (check-assert (not (more-than-one? '())))
+-> (val multi-followers
+      (o
+       ((curry filter) (lambda (p) (more-than-one? (cadr p))))
+       followers))
+-> (multi-followers '(it was the best of times , it was the worst of times ! ))
+((the (worst best)) (times (! ,)))
+-> (multi-followers '(now is the time for all good men to come to the aid of the party))
+((the (party aid time)) (to (the come)))
+-> (define variable-of (literal)
+     (if (symbol? literal)
+        literal
+        (cadr literal)))
+-> (define binds? (literal alist)
+     (find-c (variable-of literal) alist (lambda (_) #t) (lambda () #f)))
+-> (define satisfying-value (literal)
+      (symbol? literal))  ; #t satisfies 'x; #f satisfies '(not x)
+-> (define satisfies? (literal alist)
+      (find-c (variable-of literal) alist
+              (lambda (b) (= b (satisfying-value literal)))
+              (lambda () #f)))
+-> (define find-literal-true-assignment (lit cur fail succeed)
+     (if (satisfies? lit cur)
+        (succeed cur fail)
+        (if (binds? lit cur)
+           (fail)
+           (succeed (bind (variable-of lit) (satisfying-value lit) cur) fail))))
+-> (define find-disjunction-true-assignment (literals cur fail succeed)
+     (if (null? literals)
+       (fail)
+       (find-literal-true-assignment (car literals) cur 
+          (lambda () (find-disjunction-true-assignment
+                                     (cdr literals) cur fail succeed))
+          succeed)))
+-> (define find-cnf-true-assignment (disjunctions cur fail succeed)
+     (if (null? disjunctions)
+       (succeed cur fail)
+       (find-disjunction-true-assignment (car disjunctions) cur fail
+          (lambda (cur resume)
+             (find-cnf-true-assignment (cdr disjunctions) cur resume succeed)))))
+-> (define one-solution (formula)
+      (find-cnf-true-assignment formula '()
+                                (lambda () 'no-solution)
+                                (lambda (cur resume) cur)))
+-> (val f '((x y z) ((not x) (not y) (not z)) (x y (not z))))
+-> (one-solution f)
+((x #t) (y #f))
+-> (define all-solutions (formula)
+      (find-cnf-true-assignment formula '()
+                                (lambda () '())
+                                (lambda (cur resume) (al-add-element cur (resume)))))
+-> (val answers (all-solutions f))
+-> (length answers)
+9
+-> (exists? (lambda (cur) (and (= #f (find 'x cur)) (= #f (find 'y cur)))) answers)
+#f
+-> (exists? (lambda (cur) (and (= #t (find 'x cur)) (= #t (find 'y cur)))) answers)
+#t
+-> (one-solution '((x) ((not x))))
+no-solution
+-> (or 7 'seven)
+7
+-> (if 7 #t 'seven)
+#t
+-> (val n 2)
+-> (or (< 0 (set n (- n 1))) 'finished)
+#t
+-> (val n 2)
+-> (if (< 0 (set n (- n 1))) (< 0 (set n (- n 1))) 'finished)
+#f
+-> (val n 2)
+-> (or (< 0 (set n (- n 1))) 'finished)
+#t
+-> (val n 2)
+-> (let ([x (< 0 (set n (- n 1)))]) (if x x 'finished))
+#t
+-> (val n 0)
+-> (val x 'finished)
+-> (or (< 0 n) x)
+finished
+-> (val n 0)
+-> (val x 'finished)
+-> (let ([x (< 0 n)]) (if x x x))
+#f
+-> (= 3 3)
+#t
+-> (= 'a 'a)
+#t
+-> (= (cons 'a 'b) (cons 'a 'b))
+#f
+-> (val u u)
+-> (cons 'a (cons 'b (cons 4 (cons 5 '()))))
+(a b 4 5)
+-> (cons 'a (cons 'b (cons 4 5)))
+(a b 4 . 5)
+-> (cons (cons 'a 'b) (cons 4 5))
+((a . b) 4 . 5)
+-> (val resettable-counter-from
+     (lambda (x)                       ; create a counter
+        (list2
+          (list2 'step  (lambda () (set x (+ x 1))))
+          (list2 'reset (lambda () (set x 0))))))
+-> (define member? (x s my-equal?)
+      (exists? ((curry my-equal?) x) s))
+member?
+-> (define add-element (x s my-equal?)
+      (if (member? x s my-equal?) s (cons x s)))
+add-element
+-> (define make-set (my-equal? elements) (cons my-equal? elements))
+-> (define set-my-equal? (aset) (car aset))
+-> (define set-elements   (aset) (cdr aset))
+-> (val emptyset (lambda (my-equal?) (make-set my-equal? '())))
+emptyset
+-> (define member? (x s)
+      (exists? ((curry (set-my-equal? s)) x) (set-elements s)))
+member?
+-> (define add-element (x s)
+      (if (member? x s) 
+          s
+          (make-set (set-my-equal? s) (cons x (set-elements s)))))
+add-element
+-> (val alist-empty (emptyset =alist?))
+-> (val s (add-element '((U Thant)(I Ching)(E coli)) alist-empty))
+(<procedure> ((U Thant) (I Ching) (E coli)))
+-> (val s (add-element '((Hello Dolly)(Goodnight Irene)) s))
+(<procedure> ((Hello Dolly) (Goodnight Irene)) ((U Thant) (I Ching) (E coli)))
+-> (val s (add-element '((E coli)(I Ching)(U Thant)) s))
+(<procedure> ((Hello Dolly) (Goodnight Irene)) ((U Thant) (I Ching) (E coli)))
+-> (member? '((Goodnight Irene)(Hello Dolly)) s)
+#t

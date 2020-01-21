@@ -1,0 +1,28 @@
+#			simple.tasm
+#                   Author: Noah Mendelsohn
+#
+#     This is intended as a simple illustration of toyasm syntax.
+#     
+#     Things to note:
+#         1) toyasm has no character literals like 'A', wo we use ASCII values
+#            like 65 (consult an ASCII table...note that ASCII letters come
+#            in order, ro 66 is B and so on.
+#         2) The program uses the above fact to illustrate the add
+#            instruction. The correct output from this program is:
+#
+#                       A
+#                       C
+#
+#         3) As you can see, any text after # is a comment, and 
+
+#            blank lines are allowed.
+#
+loadval r3,65                  # This is the letter A in ASCII
+loadval r4,10                  # This is a newline in ASCII
+output r3
+output r4
+loadval r5,2
+add r3,r3,r5
+output r3
+output r4
+halt

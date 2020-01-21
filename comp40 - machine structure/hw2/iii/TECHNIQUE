@@ -1,0 +1,25 @@
+ TECHNIQUE
+
+A technique that I have began to implement into my coding is
+the use of mapping functions. Mapping functions make it really
+easy to work with 1 dimensional and 2 dimensional arrays and
+change the data that is presented.  
+
+The way a mapping function works is, it will take in an array,
+a void* closure pointer (which is usually NULL), and most
+importantly a pointer to another function.  This pointer
+is usually called the APPLY function and what it means is that
+for every index in an array (for 2D arrays you will need a map_row
+and map_col function that says for every index in that row, col)
+call the APPLY function on it.  A prototype of a map_row function
+will look like this:
+
+void UArray2_map_col_major(UA2 uArray2, MAPFUNC_PTR apply, void *cl)
+
+These functions are extremely useful and make updating data very efficient.
+By using mapping functions, it will eliminate the need to write the classic
+for loop that looks like this:
+
+    for (int i = 0; i < size; i++){
+       // do something
+    }

@@ -1,0 +1,61 @@
+Names: Jamie Weiss and Vlad Hugec
+
+TA Help: Maddie Payne
+
+Implementation: Eveything has been implemented correctly
+
+Architecture
+
+        40image
+                - Checks command line arguments and writes errors if necessary
+                - Checks user input to be either -c or -d
+                - Calls the appropriate function in compress40.c
+        compress40
+                - Contains 2 wrapper functions: compress40 and deocmpress40
+                - Reads file and calls appropriate function from manipulate.c
+                - Writes returned pixmap to a file (stdout in this case)
+        manipulate
+                - Image manipulation module
+                - Contains compress and decompress driver functions
+                - Compress driver function
+                        - Takes in a pixmap
+                        - Converts the RGB pixmap to component video
+                                - calls functions from ConvertRGBandCOMP
+                        - Calculates quantization data
+                                - calls functions from pack_and_unpack
+                        - Packs this data into 32 bit words
+                                - calls functions from bitpack
+                        - Initializes compressed format from specification
+                        - Appends these words to standard output
+                        - returns nothing (void)
+                - Decompress driver function
+                        - Takes in FILE * pointer (to stdout in this case)
+                        - Initializes decompress file
+                                - uses getc() to loop until buffer is at words
+                        - Reads each word a character at a time (8 bits)
+                        - Unpacks each word
+                                - calls functions from bitpack
+                        - Converts packed word back to quantization data
+                                - calls functions from bitpack
+                        - Converts each quantization data to COMPONENT data
+                                - calls functions from pack_and_unpack
+                        - Converts COMPONENT 2D array to RGB
+                                - calls functions from ConvertRGBandCOMP
+                        - Returns RGB pixmap
+        ConvertRGBandCOMP
+                - Has functions that convert RGB maps to COMPONENT video
+                - Has functions that convert COMPONENT video to RGB
+        pack_and_unpack
+                - Has functions that use formulas given in spec
+                - Functions to calculate a, b, c, d, Pb, and Pr from y,Pb,Pr
+                - Functions to calculate y,Pb,Pr from a, b, c, d, Pb, and Pr
+        bitpack
+                - functions to generate 32-bit words
+                        -  given a word, width, and lsb generate sint or uint
+                - functions to get sections of the word
+                        - given a width and lsb
+                - functions to check whether the word is packable
+
+Hours spent analyzing problems: 10 hours
+Hours spent solving problems: 40 hours
+

@@ -1,0 +1,124 @@
+                COMP 40 Lab: Unboxed and 2D Arrays
+
+
++--------------------------------------------------------+
+|Keeper of the record: Vladimir Hugec                    |
+|--------------------------------------------------------|
+| Other group member(s):
+     Jamie Weiss
+     Ray Rivers                                         |
++--------------------------------------------------------+
+
+
+PART 1: BOXED AND UNBOXED ARRAYS
+--------------------------------
+
+You are about to design the interface and implementation for a
+collection data type, I.e. an ADT like Hanson's, and you are
+considering the tradeoffs between using a boxed or an unboxed
+interface for values that users store in your collection.
+
+1A: Briefly define the terms "boxed" and "unboxed" as used for these
+    interfaces (I.e. help us be sure you know which is which!):
+    
+    Boxed arrays hold pointers to the values we are working with
+    Unboxed arrays hold the values themselves.
+
+    Using an unboxed array, the client is able to store their
+    data directly into the implementation's data structure.
+    On the contrary, when an array is boxed we can only store
+    arbitrary data into the structure.
+
+
+
+
+
+1B: List two (or more) advantages of the boxed representation.
+
+If we are storing huge structs the pointers make more sense
+space wise.  A pointer only takes up 8 bytes and large structs
+ofter exceed this.
+
+
+
+1C: List two (or more) advantages of an unboxed representation.
+
+It is faster to access data in an unboxed representation because we don't
+have to chase around pointers, we work with the values themselves
+
+Each data stored is of size that specific type.  If we are storing
+a ton of characters we only use one byte per index where a pointer
+is 8 bytes.
+
+
+1D: Look at the interface to UArray (the pointer to an interface
+    summary is in the lab instructions). Discuss the methods that show
+    the use of the unboxed style. Why, for example, does UArray_new
+    take both a number of elements and an element size? 
+
+    Length represents the number of blocks that will be calloced
+    by CALLOC and size with be the size of each of those blocks.
+    The CALLOC function takes in these two parameters which is 
+    why both of them need to be passed in to each function. Because
+    it is unboxed, we must make sure wec allocate the right amount
+    of memory for each block instead of a contant size of a single
+    pointer (8 bytes)
+
+
+PART 2: 2D Arrays from 1D Arrays
+--------------------------------
+
+2A. One way to construct a 2D array is to use multiple 1D
+    arrays. Describe briefly how you would do this. For example, if
+    the user asked you to create a 5x7 array of values, how many
+    one-dimensional arrays would you create? If the user asked to
+    store a value in cell [3,6] where would it go?
+
+    We can use our create array function wrapped in another create
+    array function. Create 5 arrays of length 7, and an array of length
+    5 which whill point to each of our length 7 arrays.
+
+    Map to the 3rd index of the pointed array (which points to an
+    array of length 7), map to the 6th index of this array and add value.
+
+
+
+2B. Another approach is to use a single one-dimensional array and to
+    put all the elements of the 2D array into that. Again, assumingg
+    that you are to create a 7x5 2D array, give a mathematical formula
+    for the index in the 1D array where a value [x,y], would go in the
+    1D array.
+
+    x = i % length 
+    y = i / length
+    or index = x + length*y;
+
+
+2C. (optional) is there another mapping that would work as well?
+
+
+
+
+
+
+
+
+
+
+
+
+PART 3: Designing the UArray2 Interface
+---------------------------------------
+
+3A. Describe three (or more) things you learned about the design and semantics 
+    of the UArray2 interface that you learned from reading useuarray2.c
+    and from running correct_useuarray2.
+
+    1. 
+
+
+
+
+
+
+

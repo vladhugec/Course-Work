@@ -1,0 +1,271 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 5
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 5}
+
+\section{RandSelect}
+
+\subsection{A}
+
+In RandSelect, as opposed to Quicksort, there is an extra step that checks if the random position chosen is actually the rank, the i-th smallest element, you're looking for.
+
+\subsection{B}
+
+In QuickSort, since your desired output is a completely sorted array, the recursion must happen on both sides of the partition; however, in RandSelect you are looking for the i-th element, so you only recurse on one of the two partitions depending on if your rank is larger or smaller than the randomly chosen pivot.
+
+\subsection{C}
+
+
+
+$\indent$
+\underline{$E[T(n)]$ for QuickSort}
+$\newline \newline$ Define indicator random variable as:
+ \begin{equation}
+  X_{k} =
+    \begin{cases}
+      1 & \text{if a pivot partitions array into k and n-k-1}\\
+      0 & \text{otherwise}
+    \end{cases}       
+\end{equation}
+
+$$T(n) \leq \Theta(n) + \Sigma_{k=0}^{n-1}(X_{k}\cdot(T(k) + T(n - k - 1))$$
+$$E[T(n)] \leq E[\Theta(n) + \Sigma_{k=0}^{n-1}(X_{k}\cdot(T(k) + T(n - k - 1))]$$
+
+$\newline \newline \indent$ 
+\underline{$E[T(n)]$ for RandSelect}
+$\newline \newline$ Define indicator random variable as:
+ \begin{equation}
+  X_{k} =
+    \begin{cases}
+      1 & \text{if RandPartition gives k vs n-k-1 split}\\
+      0 & \text{otherwise}
+    \end{cases}       
+\end{equation}
+$$T(n) \leq \Theta(n) + \Sigma_{k=0}^{n-1}(X_{k}\cdot T(max\{k,n-k-1\})$$
+$$E[T(n)] \leq E[\Theta(n) + \Sigma_{k=0}^{n-1}(X_{k}\cdot T(max\{k,n-k-1\})]$$
+
+$\newline \newline $NOTE: The above recurrence relations for QuickSort and RandSelect were taken from Lecture
+
+$\newline \newline \indent$ 
+\underline{The Difference}
+
+$\newline \newline$
+The difference between theses two functions' $E[T(n)]$'s can be summarized by noting the two recurrence calls for QuickSort and the one call for RandSelect. In the RandSelect $E[T(n)]$, the recurrence contains the function $max$ which takes two elements and returns the larger one, what this means in terms of the $E[T(n)]$ is that we are assuming the recurrence will run on the worse case, the larger partition. In QuickSort, the recurrence will run on both the larger and smaller partitions. Therefore the summation over the recurrences for RandSelect would start at $\frac{n}{2}$ instead of $0$ as in QuickSort.
+
+\subsection{D}
+
+\underline{QuickSort $E[T(n)]$ by substitution}
+
+$\newline$
+
+\textbf{Claim:} $E[T(n)] = \Theta(n)$ 
+
+\textbf{Base Case:} For the base case we start at $n=1$, so $$E[T(1)] = E[\Theta(1)] = \Theta(1)$$
+
+\textbf{Induction Step:} From the definition for $X_{k}$ for QuickSort is shown is part C above, since all pivot locations are equally likely this means that $E(X_{k}) = \frac{1}{n}$.Assume $E[T(k)] \leq a \cdot k$	$\forall k < n$. We want to show that $E[T(n)] \leq a \cdot n$ for some constant $a$ chosen by us: 
+
+\begin{center}
+
+$E[T(n)] \leq E[\Theta(n) + \Sigma_{k=0}^{n-1}(X_{k}\cdot(T(k) + T(n - k - 1))]$
+
+$\downarrow$ By Linearity of Expectation $\downarrow$
+
+$E[T(n)] \leq E[\Theta(n)] + E[\Sigma_{k=0}^{n-1}(X_{k}\cdot(T(k) + T(n - k - 1))]$
+
+$\downarrow$ By Independence of Random Variables $\downarrow$
+
+
+$E[T(n)] \leq \Theta(n) + \Sigma_{k=0}^{n-1}E[X_{k}] \cdot E[(T(k) + T(n - k - 1))]$
+
+
+$E[T(n)] \leq \Theta(n) + \Sigma_{k=0}^{n-1}\frac{1}{n} \cdot E[(T(k) + T(n - k - 1))]$
+
+$E[T(n)] \leq \Theta(n) + \frac{1}{n} \cdot \Sigma_{k=0}^{n-1} E[(T(k) + T(n - k - 1))]$
+
+$\downarrow$ By Linearity of Expectation $\downarrow$
+
+$E[T(n)] \leq \Theta(n) + \frac{1}{n} \cdot \Sigma_{k=0}^{n-1} E[(T(k)] + \frac{1}{n} \cdot \Sigma_{k=0}^{n-1}E[T(n - k - 1))]$
+\end{center}
+
+Note that both the sums are in fact the same sums, just done in reverse, i.e. for $k = 0$, we get $E[T(0)]$ on the left and $E[T(n-1)]$ on the right. For $k = 1$, we get $E[T(1)]$ on the left and $E[T(n-2)]$ on the right. For $k = n-1$, we get $E[T(n-1)]$ on the left and $E[T(0)]$ on the right. Therefore we can reduce the formula as follows:
+
+\begin{center}
+
+$E[T(n)] \leq \Theta(n) + \frac{2}{n} \cdot \Sigma_{k=0}^{n-1} E[(T(k)]$
+
+$\downarrow$ By Substitution $\downarrow$
+
+$E[T(n)] \leq d \cdot n + \frac{2}{n} \cdot \Sigma_{k=0}^{n-1} a \cdot k$
+
+$E[T(n)] \leq d \cdot n + \frac{2a}{n} \cdot \Sigma_{k=0}^{n-1} k$
+
+$E[T(n)] \leq d \cdot n + \frac{2a}{n} \cdot  k(n-1)$
+
+$E[T(n)] \leq d \cdot n + \frac{2a \cdot (kn-k) }{n}$
+
+$E[T(n)] \leq d \cdot n + \frac{2akn}{n} - \frac{2ak}{n}$
+
+$E[T(n)] \leq d \cdot n + 2ak - \frac{2ak}{n}$
+
+Let $a_{1} = 2a \rightarrow E[T(n)] \leq d \cdot n + a_{1}k - \frac{a_{1}k}{n}$
+
+$E[T(n)] \leq  a_{1}k - (\frac{a_{1}k}{n} - d \cdot n)$
+
+
+\end{center}
+
+We know that the right term in the subtraction must be negative in-order for the inequality to hold:
+
+\begin{center}
+
+$\frac{a_{1}k}{n} - d \cdot n \leq 0$
+
+$\frac{a_{1}k}{n}  \leq d \cdot n$
+
+\end{center}
+
+This satisfying this inequality is impossible due to our definition of $k < n$; therefore $E[T(n)] \neq \Theta(n)$
+
+\pagebreak
+
+\section{Vikings}
+
+\subsection{A}
+
+Let $k$ represent the number of Vikings and $n$ represent the number of islands.
+Since we are fixing an island, let $I$ represent a particular island($I_{x}$ where $x$ represents the number of vikings landed on that island). And $V_{L}$ represent the probability of a viking landing on that particular island:
+
+$$V_{L} = \frac{1}{n}$$
+And Let $V_{N}$ represent the probability that a viking does not land on that particular island equal:
+
+$$V_{N} = 1-\frac{1}{n} = \frac{n-1}{n}$$
+
+The probability that no viking lands on this island in particular: $$I_{0} = (V_{N})^{k}$$. And the probability that only one viking lands on the island: $$I_{1} = k \cdot V_{L} \cdot (V_{N})^{k-1}$$
+
+Since we know that battles will only occur if $k > 1$ on an island, we need to take this into account. $I_{1+} = 1 -  I_{0} -I_{1}$. Therefore to find the total number of expected battles we multiply the probability that more than one viking lands on a particular island by the total number of islands.
+
+\begin{center}
+$E[$ \# of battles$] = n \cdot I_{1+}$
+\end{center}
+
+\subsection{B}
+
+\textbf{\underline{Only One Island}}
+
+If we let $n=1$, then this intuitively must mean that there will be battles no matter what, so I'm expecting a probability of $1$:
+
+\begin{center}
+$E[$ \# of battles$] = n \cdot I_{1+}$
+
+$ = 1 \cdot (1 -  I_{0} -I_{1})$
+
+$ = 1 - ((V_{N})^{k}) - (k \cdot V_{L} \cdot (V_{N})^{k-1}) $
+
+$ = 1 - ((\frac{n-1}{n})^{k}) - (k \cdot \frac{1}{n} \cdot (\frac{n-1}{n})^{k-1})$
+
+$ = 1 - ((\frac{1-1}{1})^{k}) - (k \cdot \frac{1}{1} \cdot (\frac{1-1}{1})^{k-1})$
+
+$ = 1 - 0 - 0 = 1$
+
+\end{center}
+
+\textbf{\underline{Only One Viking}}
+
+If we let $k=1$, then this intuitively must mean that there will be no battles no matter what, since there is no one to battle with I'm expecting a probability of $0$:
+
+\begin{center}
+$E[$ \# of battles$] = n \cdot I_{1+}$
+
+$ = n \cdot (1 -  I_{0} -I_{1})$
+
+$ = n \cdot (1 - (V_{N})^{k} - (k \cdot V_{L} \cdot (V_{N})^{k-1}) $
+
+$ = n \cdot (1 - (\frac{n-1}{n})^{k} - (k \cdot \frac{1}{n} \cdot (\frac{n-1}{n})^{k-1})$
+
+$ = n \cdot (1 - (\frac{n-1}{n})^{1} - (1 \cdot \frac{1}{n} \cdot (\frac{n-1}{n})^{1-1})$
+
+$ = n \cdot (1 - \frac{n-1}{n} - \frac{1}{n})$
+
+$ = n \cdot (\frac{n}{n} - \frac{n-1}{n} - \frac{1}{n})$
+
+$ = n \cdot (\frac{n}{n} + \frac{1-n}{n} - \frac{1}{n})$
+
+$ = n \cdot (\frac{(n+1)-(n+1)}{n})$
+
+$ = n \cdot (\frac{0}{n}) = 0$
+
+
+\end{center}
+
+\textbf{\underline{400 Vikings and 100 Islands}}
+
+Let $k=400$ and $n=100$:
+
+\begin{center}
+
+$E[$ \# of battles$] = n \cdot I_{1+}$
+
+$ = n \cdot (1 -  I_{0} -I_{1})$
+
+$ = n \cdot (1 - (V_{N})^{k} - (k \cdot V_{L} \cdot (V_{N})^{k-1}) $
+
+$ = 100 \cdot (1 - (\frac{99}{100})^{400} - (4 \cdot (\frac{99}{100})^{399})$
+
+$ = 90.95 \approx 90$ Battles
+
+\end{center}
+
+
+
+
+
+
+
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

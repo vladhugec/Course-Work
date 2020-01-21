@@ -1,0 +1,17 @@
+#--------------------------------------------------------------------
+#
+#                          AND MACRO
+#
+#        THREE PARAMETERS: p1 & p2 & p3
+#        p1 := p2 & p3
+#
+#        BY: Vladimir Hugec // comp40-lab12
+#
+#--------------------------------------------------------------------
+
+include com.tasm
+
+macro and
+nand p1,p2,p3
+com p1,p1
+mend

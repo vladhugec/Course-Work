@@ -1,0 +1,41 @@
+;; Exercise ADT
+
+For Exercise 42
+
+    NatZero
+    
+        ;; Abstraction Function
+        ;; A (self) = 0
+        ;;    This class is for representing zero, so any instance is 0 
+        
+    NatNonzero
+    
+        ;; Abstraction
+        ;; A (m d) = (m * base) + d
+        ;;    Numbers constructed recursively with next digit constructed
+        ;;    by seperate instance of Natural int, however, for single digit
+        ;;    numbers, it is represented by NatZero
+        
+        
+    Representation
+    
+        The reason I chose this abstraction was because it felt very similar
+        in structure to previous assignments. Methods built on eachother and the
+        algebraic laws felt intuitive as well.
+        
+For Exercise 43
+
+    No instances of LargeInteger class are created.
+
+    A (+ magnitude) = LargePositiveInteger
+    A (- magnitude) = LargeNegativeInteger
+
+    
+    NOTE: for large negative integer, I ran out of time and tokens,
+          I was doing it solo and so it took me a while to figure out
+          what was going on and after I did it was too late to finish 
+          implementing SmallInteger and LargeNegativeInteger, even
+          though they would be very similar to what I already have with
+          LargePositiveInteger.
+        
+        

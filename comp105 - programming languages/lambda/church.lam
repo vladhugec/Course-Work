@@ -1,0 +1,42 @@
+// even?
+
+not = \x.(x false true);
+
+even? = \x.x not true;
+
+// divide by 2
+
+addup = \num.(even? (succ (fst num)) 
+                       (pair (succ (fst num)) (succ (snd num)))
+                       (pair (succ (fst num)) (snd num)));
+                       
+div2 = \x. snd (x addup (pair <0> <0>));
+
+// binary
+
+iszero? = \x.x (\x.false) true;
+<10> = (succ (succ (succ (succ (succ (succ <4>))))));
+
+noreduce binary = Y (\f.\m. (iszero? m) 
+                                <0> 
+                                (+ ((even? m) <0> <1>) 
+                                   (* (f (div2 m)) <10> )));
+
+// nth
+
+noreduce nth = \n.\xs. car (n cdr xs);
+
+// EXTRA-CREDIT
+
+noreduce binary-sym = \zero.\one. Y (\f.\n. (iszero? n)
+                                        zero
+                                        ((even? n)
+                                            ((f (div2 n)) zero)
+                                            ((iszero? (div2 n))
+                                                one
+                                                ((f (div2 n)) one))));
+
+                                               
+
+
+

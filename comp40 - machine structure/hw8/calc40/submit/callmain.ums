@@ -1,0 +1,12 @@
+// callmain.ums
+//
+// By: Vladimir Hugec
+// comp40-hw8
+
+.section init
+.zero r0
+.temps r6, r7
+.section text
+
+main:
+        goto waiting

@@ -1,0 +1,14 @@
+written.text
+
+Input : ./postoffice zip 11010010100100101100000011001101 110100100010010101010
+        01100000111 < us_postal_codes1.txt
+    -> Check if storage as a zipcode and conversion to and from a zip code 
+        works smoothly
+
+Input : ./postoffice zip 99801 97256 < us_postal_codes1.txt
+    -> Check correct initialization of Classes and storage of correct info into
+        structs
+
+Input : ./postoffice zip 00341 97256 < us_postal_codes1.txt
+    -> Check if program can handle leading zeroes and what porgram would do in
+        case it could not find a matching zipcode

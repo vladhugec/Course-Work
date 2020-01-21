@@ -1,0 +1,79 @@
+READING COMPREHENSION
+
+1) 
+    Definitely need to work on making sure my code works for all the
+   edge cases, basically writing better tests to make sure that is the case
+   
+2) 
+  (a) Stands for an variable store / environment, mapping from names to values
+  (b) Stands for a type built with type variables type constructors, 
+      and a construction application (called a type)
+  (c) Stands for a type quantified over a list of type variables 
+      (called a type scheme)
+  (d) Stands for a type environment, mapping from names to type schemes
+  (e) t is a type whereas o is a type that is quantified over a list of type 
+      variables, so for example t = int and o = (forall ('a 'b) int)
+  
+3) 
+    (a) Yes
+    (b) Yes
+    (c) No
+    (d)
+        1. False
+        2. False
+        3. True
+        4. False
+        
+4) 0 = (a1 -> int)
+   C = a1~a2 /\ a2~a3 list /\ a4~a3 list list.
+         C1        C2           C3
+         
+   (a) C' = 0(C1 /\ C2 /\ C3)
+       C' = 0C1 /\ 0C2 /\ 0C3
+       C' = int~a2 /\ a2~a3 list /\ a4~a3 list list
+       
+   (b) No, C' does not have a solution
+   
+   (c) C'' = a1~int /\ int~a3 list /\ a4~a3 list list
+       
+   (d) No, C'' does not have a solution
+   
+5) C1 = a ~ int
+   C2 = a ~ bool
+   C3 = C1 /\ C2
+   C4 = a1 ~ a2 /\ a2 list ~ a1
+   
+   (a) 01 = (a -> int)
+   (b) 02 = (a -> bool)
+   (c) No
+   (d) No
+   (e) No
+
+6) e = (f 3 #t)
+    f ~ (forall () ('a x 'b -> 'c))
+    3 ~ int
+    #t ~ bool
+
+    (a) t = 'd
+        C = 'a x 'b -> 'c ~ 'int x 'bool -> 'd
+      
+    (b) t = 'd
+        C = 'a ~ int x 'bool -> 'd
+
+7) 
+    (a) (forall () t1)
+    (b) 
+        1. No
+        2. No
+        3. YES
+        4. No
+        5. No
+
+8) 
+    (a) β
+    (b) {β}
+    (c) (forall (β) (β list))
+     
+
+
+    

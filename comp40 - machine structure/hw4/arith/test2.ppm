@@ -1,0 +1,13 @@
+P3
+3 5
+255
+# The part above is the header
+# "P3" means this is a RGB color image in ASCII
+# "3 2" is the width and height of the image in pixels
+# "255" is the maximum value for each color
+# The part below is image data: RGB triplets
+250   0   0     0 250   0     0   0 250
+250 250   0   250 250 250     0   0   0
+250   0   0     0 250   0     0   0 250
+250 250   0   250 250 250     0   0   0
+250   0   0     0 250   0     0   0 250

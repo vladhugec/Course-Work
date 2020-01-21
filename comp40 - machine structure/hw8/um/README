@@ -1,0 +1,139 @@
+Name: Vladimir Hugec and Mason Pollack
+
+HELP: Several TA's whose names I've forgotten
+
+WHAT WORKS: Everything works and runs, but a tad slower than ideal.
+
+CHANGES FROM DESIGN: We had to rethink how exactly our program counter worked,
+we misunderstood the spec for a long time regarding the program counter, 
+including in our design doc but once we understood what the actual program 
+counter was in the first place everything fell into place.
+
+Our architecture is segmented as follows:
+        UM_main.c
+                - driver for whole program
+                - contains just main in which actual UM is allocated 
+                ran and freed, program file is opened and ran on UM
+                - can make a UM and have a UM
+                - basically knows nothing but which instruction should 
+                  be given to ALU and the actual .um file
+        
+        UM_segData.c/.h
+                - Code for Data Loader and unloader for UM
+                - does allocation of actual UM
+                - contains helpful Get and Set functions for UM Data
+                - knows all secrets regarding core data
+                - doesnt know what that data is
+        
+        UM_ALU.c/.h 
+                - contains core logic and operation
+                - recieves word from UM_main.c, does operation, and returns
+                  and int (0 or 1 or 2) representing UM states
+                  0 -> end (failure/error)
+                  1 -> continue
+                  2 -> end (success)
+                - knows what a piece of data means and know how to do 
+                  what it says
+                - doesnt know where it comes from or what comes next
+
+FOR 50 MILLION INSTRUCTIONS - 
+        midmark.um -  ~8 seconds for 30,109 instructions = 0.000266 per sec
+        sandmark - ~3:30 for 11,420 instructions = 0.0184 per sec
+
+        Time until boot (first input required):
+          advent.umz - ~60 seconds for 180,722 instructions = 0.000332 per sec
+          codex.umz - ~2:16 for 325,243 instructions = 0.00042 per sec
+
+        Excluding sandmark.um:
+        AVERAGE of those 3 = 0.00034
+          0.00034 * 50 million = { 282.777775 minutes }
+
+UNIT TESTS:
+        halt_test: 
+                tests that the halt function works using a halt command
+
+        verbose_halt_test: 
+                tests that the halt funciton works and makes sure that no
+                other commands are executed after the halt.
+
+        add_test: 
+                tests the add funciton by using the add command to add
+                numbers and then halting
+
+        print_six_test: 
+                tests load val by using the loadval command to 
+                load 2 values. then tests the add command and load by adding 
+                the two registers that had values loaded. Then tests the output
+                function by outputting the sum and checking that the output 
+                is 6.
+
+        emit_cMov_test: tests that cmov works when the condition is false by 
+                loading two values. Since the condition is false, it should not
+                move one of the vals onto the other register and this is 
+                checked by the output being two different chars.
+
+        emit_cMov_test2: 
+                tests that cmov works when the condition is true by 
+                loading two values. Since the conditin is true, the same
+                value should be printed twice because one value is moved
+                onto the other register.
+
+        seg_load_test: 
+                tests segload (and map) by using map to create a second
+                segment, then the first instruction in the new seg is
+                loaded into a register. If the mapping or seg load were
+                not working, this would cause an assertion error or 
+                seg fault.
+
+        seg_store_test: 
+                tests segstore (and map and seg load) by loading values
+                then activating a new segment with these values and then
+                storing a new value as a segment. Then sload is used to
+                get this value. The value is then output and the output
+                should match the value that has been passed through.
+
+        multiply_test: 
+                tests the multiply function by loading values, multiply
+                them and then outputting the value which is known.
+
+        division_test: 
+                tests the division function by loading values, dividing
+                them and then outputting the value which is known.
+
+        nand_test: 
+                tests the nand function by loading zeros, nanding them, which
+                results in all 1s. Then nanding this number with itself, 
+                which results in all zeros again. Then adding a value to 
+                this to make it a known character.
+
+        map_seg_test: 
+                tests map by loading a value and then mapping a segment.
+                this will cause memory errors if map does not work.
+
+        unmap_seg_test: 
+                tests unmap and map by loading a value, mapping a 
+                segment for this value, unmapping the segment, and then
+                mapping again. There will be errors unmapping the
+                segment if the map doesnt work. There will also be 
+                errors mapping the segment again if the unmapping does
+                not work.
+
+        input_output_test: 
+                tests input and output by inputting a value and
+                having the output be the same value.
+
+HOURS SPENT:
+        Analyzing - We would say about 4 hours were spent figuring out
+                    what a UM even is
+        Designing - Spent around an hour or 2 designing and submitting
+        Solving - Around 2 hours were spent coding our initial code
+                - An hour was spent fixing stupid errors and compile
+                  issues
+                - 1 hour for understand a program counter
+                - 2 hours to fix code for new program counter
+                - 6 hours spent figuring out why we could run midmark 
+                  and sandmark, but not advent.umz or codex.umz
+                  (fogot to put a break; after 'Input' case.........)
+
+        Total -  ~18 +/- 2 hours
+                

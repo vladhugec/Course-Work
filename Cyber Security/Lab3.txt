@@ -1,0 +1,52 @@
+PART 1:
+
+	1. SERVICE: ssh
+	   PORT: 22
+
+	   SERVICE: http
+	   PORT: 80
+	
+	   SERVICE: ssl/http
+	   PORT: 443
+
+	   SERVICE: irc
+	   PORT: 6666
+
+	2. YES
+	  a) The service used on ports 80/443 is nginx 1.10.3. I googled nginx and its a Web server service.
+
+	3. NO
+
+	4. DD-WRT v24-sp2 (Linux 2.4.37) (98%)
+	
+	5. Port 22 has an openSSH protocol running on it allowing anyone with a password to access the system.
+	
+	6. I ssh'd into the target. And when prompted for the password I immediately entered 'password' and laughed when it worked (Thanks again for pointing me in the right direction professor!)
+
+PART 2:
+
+	7. I used SHODAN:
+		
+		OPEN PORTS
+		21
+		21
+		25
+		53
+		80
+		110
+		111
+		123
+		143
+		443
+		465
+		993
+		3306
+		8880
+
+	   This target seems to be some sort of database in San Antonio
+
+	8. NETGEAR R8000 = 4,244 results
+		   R7000 = 9,110 results
+		   R6400 =   241 results
+	   -----------------------------
+	   Total Exposed = 13,595 still exposed

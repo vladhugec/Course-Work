@@ -1,0 +1,115 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 6
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 6}
+
+\section{Randomized Quicksort}
+
+\subsection{A}
+
+In the worst case Randomized Quicksort would be $O(n^2)$, since, just as in regular Quicksort, if the randomly chosen pivot happens to be either the min or the max of the data set, then the recursion would produce a skewed tree which is $O(n^2)$
+
+\subsection{B}
+
+Note: Proof idea taken from Tufts Comp160 video lecture on Quicksort posted online.
+
+To find the expected runtime of a randomized Quicksort we take a look at the number of expected comparisons we will make. Let $X$ represent our data set, with $X_{i}$ and $X_{j}$ representing the $i$th and $j$th elements of the set respectively. Let $X_{ij}$ represent the set of elements between $i$ and $j$ inclusively. If a randomly chosen pivot occurs in the set $X_{ij}$ then $X_{i}$ and $X_{j}$ will be sorted into different partitions and thus will never be compared. So two random element $X_{i}$ and $X_{j}$ will only be compared if a pivot is chosen that is either $X_{i}$ or $X_{j}$.
+
+So we want the probability that $X_{i}$ or $X_{j}$ is the first pivot chosen. Let $P(Y)$ represent that probability. Let $P(X_{i})$ be the probability that $X_{i}$ is the first pivot chosen and $P(X_{j})$ be the probability that $X_{j}$ is the first pivot chosen. So $P(Y) = P(X_{i}) + P(X_{j})$. The probability of both $P(X_{i})$ and $P(X_{j})$ is 1 over the total number of elements in the set $X_{ij}$. So $P(X_{i}) \& P(X_{j}) = \frac{1}{j-i+1}$. $$P(Y) = \frac{2}{j-i+1}$$
+
+Let $E[X]$ represent the expected number of comparisons made.
+
+\begin{center}
+
+$E[X] = \Sigma_{i=1}^{n-1} \Sigma_{j=i+1}^{n} P(Y)$
+
+$= \Sigma_{i=1}^{n-1} \Sigma_{j=i+1}^{n} \frac{2}{j-i+1}$
+
+$= \Sigma_{i=1}^{n-1} \Sigma_{k=1}^{n} \frac{2}{k}$
+
+$= \Sigma_{i=1}^{n-1} O($log $n)$
+
+$= O(n$ log $n) \leftarrow $ expected runtime of Randomized Quicksort
+
+\end{center}
+
+\pagebreak
+
+\subsection{C}
+
+In order to guarantee that Randomized Quicksort runs in $O(n$ log $n)$ in the worst case, you need to eliminate the possibility that the pivot chosen is in the min or the max of the set. You can ensure that this doesn't happen by selecting the median element as the pivot. Median finding takes $O(n)$ time and so the worst case would be $O(n$ log $n)$.
+
+\subsection{D}
+
+Let our set of elements be: $\{1_{1}, 3_{2}, 1_{3}, 4_{4}\}$ with subscripts denoting start positions in the array. A stable sorting algorithm ensures that after elements are sorted equal elements appear in the same order as pre-sorting. So a stable algorithm would return $\{1_{1}, 1_{3}, 3_{2}, 4_{4}\}$. The $1_{1}$ occurs before $1_{3}$ in both the original and sorted set.
+
+However, choosing $1_{1}$ as the pivot will produce the following sequence $\{1_{3}, 1_{1}, 3_{2}, 4_{4}\}$. The $1_{1}$ occurs after $1_{3}$ in the sorted set and therefore Randomized Quicksort is not stable.
+
+\pagebreak
+
+\section{Hashing}
+
+Modifying hash chaining to keep elements in increasing sorted order as opposed to arrival order would have the following effects on these functions:
+
+\subsection{Insertion}
+
+Insertion would theoretically take a little less time for very long chains. If we are inserting in arrival order, we insert at the end of the chain each time, which means perusing through the linked list until the end each time. If we insert based on increasing order, we insert at the end of the chain in the worst case, on average we will not be traversing the entire list.
+
+\subsection{Deletion}
+
+Deletion, assuming the chain is doubly linked, I wouldn't think would be any different. Since you have already found the key with a successful search, you just need to delete that element, and it is unknown where that element lies in the chain in either case, the result would be the same.
+
+\subsection{Successful Search}
+
+Successful Search would be unchanged as well. You don't know how the element you're looking for relates to the rest of the chain. It could be anywhere in both types of chaining.
+
+\subsection{Unsuccessful Search}
+
+Unsuccessful Search however is faster. Since you know the elements are in increasing order, if the element you're looking for is smaller than the element you're at in the chain, regardless of how long the chain still is you know it is not present in the table.
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

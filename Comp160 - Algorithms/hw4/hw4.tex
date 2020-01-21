@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 4
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 4}
+
+\section{Radix Sort}
+\subsection{Correctness}
+
+\begin{lemma}
+RadixSort will properly sort any n natural numbers.
+\end{lemma}
+
+\begin{proof}
+To prove Lemma 1, we will use induction on the number of digits that each value has, $l$. In the base case, for a list of single digits values, $l = 1$, assume that radix sort sorts the array based on the single digit and returns the now sorted list. So radix sort is able to sort a list of single digit values.
+
+Now assume that radix sort correctly sorts $l-1$ digits. Now all numbers are sorted up to their ($l-1$)th digit, leaving the $l$th digit left to be sorted. And since we know that radix sort sorts one column at a time, without regard to other columns, sorting the $l$th digit is done in the same manner as before. The smaller digit is sorted to the left of the larger digit, also without regard for the other digits of the number. And thus it follows that Radix sort works for $l$ digits.
+\end{proof}
+
+\subsection{Runtime}
+\begin{lemma}
+RadixSort runs in $O(l(n + d))$ time, where d is the radix (the number of digits in the base) and l is the maximum length of the n numbers.
+\end{lemma}
+To justify briefly this statement, we need to take a look at sorting individual positive numbers, for this we will use CountingSort which has a known complexity of $O(n + d)$, since we know that RadixSort sorts $l$ digits independently of the others, this means that for RadixSort will pass over the entire list $l$ times performing $(n+d)$ actions. And so it follows that the time complexity for Radix Sort is $O(l(n + d))$.
+
+\pagebreak
+
+\section{Sort n integers from 0 to $n^k$}
+
+\subsection{A}
+
+The time complexity for using Counting Sort would be $O(n^k)$ since the given range is from $0$ to $n^k$ numbers.
+
+\subsection{B}
+\begin{center}
+$l = \lfloor log_{d}(n^k) \rfloor + 1$
+\end{center}
+The value of $l$ depends on the base, $d$, and the value, $n^k$. $l$ is the number of digits in a number so for example if we have $n^k = 625$, in base 10, there are 3 individual digits and so $\lfloor log_{10}(625) \rfloor + 1$ should be 3, which it is, and it holds for all bases.
+
+If we go from $d$ to $d^2$, the value of $l$ will always decrease.
+
+\subsection{C}
+
+If $d=2$, then the runtime would be:
+\begin{center}
+$O((\lfloor log_{2}(n^k) \rfloor + 1) * (n + 2))$
+\end{center}
+
+If we want to minimize runtime, then the best value of d would be where $d = n$, since $log_{n}(n) = 1$. So the time complexity would be:
+\begin{center}
+$O((\lfloor log_{n}(n^k) \rfloor + 1) * (n + n))$
+
+$O((k + 1) * (2n))$
+
+$O(n)$
+\end{center}
+
+\subsection{D}
+
+The time cost of converting our input from base 2 to base n would be the number of values, here that is $n^k$, multiplied by the time it takes to execute a change of base operation. Here I am assuming C(x) is a function that takes a base 2 number and returns a base n number. So it would follow that the time-complexity for preprocessing our input would be: 
+
+\begin{center}
+$O(C(x)n^k)$
+\end{center}
+
+\pagebreak
+
+\section{Time Complexity of Max Function}
+
+If we have a function max($x$) where $x$ is a form of list or array, then the number of times we must update the max is dependent on the location of the max within $x$. Suppose the max is the first element of $x$, then the number of updates we must make is only 1. This is our best case scenario, $O(1)$. Now suppose the max is at the end of $x$, then at worst we would need to update $O(n)$ times. For the average number of times we can expect to update the max variable, we take a look at the expected number of times we would need to iterate. We will assume that a number n has a probability of $\frac{1}{n}$ chance of being in each location. Let $y_{i}$ be a random variable that denotes the position of the max within $x$ and $S$ be the sum of the possible positions of the max:
+\begin{center}
+$S = \sum_{i=1}^{n}y_{i}$
+\end{center}
+And so the expected value of $S$ is $E(S) = E(\sum_{i=1}^{n}y_{i}) = \sum_{i=1}^{n}(E(y_{i})$. Do to a uniform distribution assumption, we can expect the  location of the max to occur anywhere in between the two extremes of either end. So hypothetically, $E(y_{i}) = \sum_{i=1}^{n}(\frac{i}{n})$. So we have:
+\begin{center}
+$E(S) = \sum_{i=1}^{n}(\sum_{i=1}^{n}(\frac{i}{n})) = n(\sum_{i=1}^{n}(\frac{i}{n}))$
+\end{center}
+This means that the average number of updates is actually $O(n)$ times.
+
+
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -1,0 +1,41 @@
+1. 
+    ty (AAT (a, i)) = ArrayAt 
+    ty (APUT (a, i, e)) = ArrayPut
+    ty (AMAKE (len, init)) = ArrayMake
+    ty (ASIZE a) = ArraySize
+    
+2. 
+    a) ((@ length sym) syms)
+    b) ((o int bool bool) not positive?
+    c) (define third (type-lambda ['a 'b 'c]
+            (lambda ([x : 'a] [y : 'b] [z : 'c] ) z)))
+            
+3.
+    a) false
+    b) true
+    
+4. 
+   a)
+       (if #t 1 #f)
+        -> No, since 1 is an int and #f is a bool
+   b)
+       (let ([x 1] [y 2]) (+ x y))
+        -> Yes
+   c)
+       (lambda ([x : int]) x)
+        -> Yes
+   d)
+       (lambda ([x : 'a]) x)
+        -> No, 'a has not type-lamdba ['a] and so is not in scope
+   e) 
+       (type-lambda ['a] (lambda ([x : 'a]) x))
+        -> Yes
+        
+5. 
+     WHILE needs to be rewritten
+     
+6. 
+    a) 429a
+    b) The list primitives since those functions also have polymorphic types
+    c) 1263e
+    

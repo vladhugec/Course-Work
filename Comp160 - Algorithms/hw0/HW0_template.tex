@@ -1,0 +1,170 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 1
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 1}
+
+\section{Self introduction}
+\subsection{Photo}
+
+\begin{figure} [h]
+\begin{center}
+\caption{This is a picture of me, Vladimir Hugec}
+
+\end{center}
+\end{figure}
+
+\subsection{Hobbies}
+
+\begin{enumerate}
+	\item Tennis
+	\item Computers
+	\item Soccer
+\end{enumerate}
+
+\pagebreak
+
+\section{Previous Knowledge}
+
+\subsection{Known Topics}
+	\begin{enumerate}
+		\item InsertionSort, MergeSort
+		\item Dynamic Programming
+		\item BFS, DFS
+	\end{enumerate}
+
+\subsection{Familiar Topics}
+	\begin{enumerate}
+		\item big O and Omega Notation
+		\item Deterministic selection (median-finding)
+		\item Hashing
+		\item BST and relationship to QuickSort
+		\item NP-hardness
+		\item Reductions
+		\item Approximation
+	\end{enumerate}
+
+\subsection{Unknown Topics}
+	\begin{enumerate}
+		\item Recurrences by trees and substitution
+		\item Master method
+		\item Sorting lower bound
+		\item CountingSort and RadixSort
+		\item IRV and QuickSort Analysis
+		\item Randomized Selection
+		\item Augmented trees
+		\item Red-Black trees
+		\item Amortization
+		\item Topological sort and SCC
+		\item Kruskal’s algorithm
+		\item Prim’s algorithm
+		\item SSSP
+	\end{enumerate}
+
+\pagebreak
+
+\section{Mock Exercise}
+
+\begin{lemma}
+Since we know the order in which the cities are visited, and we know the population of each of those cities, we can simply write a program that essentially models the first calendar year and returns the city with the highest population completed in that year.
+\end{lemma}
+
+\begin{proof}
+
+We have a list of cities and their populations
+
+\begin{enumerate}
+	\item C1:P1
+	\item C2:P2
+	\item C3:P3
+	\item .......
+	\item Cn:Pn
+\end{enumerate}
+
+We start counting on a hypothetical Jan 1st or day 1/365. For each day P1/2 until P1 = 0. Then we move to P2 and repeat P2/2 until P2 = 0. Once the day is 365/365 we stop. If the city that we were currently counting, Ci, has Pi = 0 then include it in the cities completed. Then we are left with a list of cities completed in the first year and we sort by the largest Pn and return the first element.
+
+\end{proof}
+
+\pagebreak
+
+\section{Fun Challenges}
+
+\subsection{Formula}
+
+$$ \sqrt{\alpha + \Theta - \frac{x}{2} + y^2} $$
+
+\subsection{Table}
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+% after \\ : \hline or \cline{col1-col2} \cline{col3-col4} ...
+   Monday & Tuesday & Wednesday & Thursday & Friday \\
+   1:30 Tennis & 1:30 Comp170 & & 1:30 Comp170  \\
+   & 4:30 170 Rec. & 5:30 160 Recitation & 6:00 Comp160  \\ 
+   & 6:00 Comp160 &   &\\ 
+\hline
+\end{tabular}
+
+\subsection{Figure}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=2in]{graph}
+\caption{this is a graph of $y = x^2$}
+\label{ }
+\end{center}
+\end{figure}
+
+\subsection{Command}
+
+The most 'fun' command I've come across is the Coffee stains package by Hanno Rein. It draws a coffee stain on the document like the one on the top of this page!
+
+\cofeAm{1}{1.0}{0}{5.5cm}{3cm}
+
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

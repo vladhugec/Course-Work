@@ -1,0 +1,153 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 7
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 7}
+
+\section{}
+
+\subsection{A}
+
+The worst-case runtime of a single $MULTIPOP$ operation is $O(n)$ since in a single operation, the most you can pop is the size of the stack.
+
+\subsection{B}
+
+A sequence of $n$ operations in any combination of $PUSH$, $POP$, and $MULTIPOP$ should take $O(n)$ time since for an element $PUSH$'ed to the stack it can be popped at most once. And so, the number of times that a $POP$ operation can be executed is at most the number of times that an element has been $PUSH$'ed, which is at most $n$, so $O(n)$.
+
+\subsection{C}
+
+\textbf{What virtual cost would you give to each operation?}
+
+$PUSH \rightarrow 2$
+
+$POP \rightarrow 0 $
+
+$MULTIPOP \rightarrow 0$
+
+$\newline$
+\textbf{What is the real cost of each operation?}
+
+$PUSH \rightarrow O(1)$ 
+
+$POP \rightarrow O(1)$
+
+$MULTIPOP \rightarrow O(min(k,n))$
+
+$k$ is the number of elements to be $POP$'ed
+
+$n$ is the number of elements in the stack.
+
+\subsection{D}
+
+When we push to the stack we pre-pay a cost of $1$ coin, thus each element in the stack has been half paid for. So when we pop an element, we also remove the pre-paid cost and use it to pay the $POP$ cost, so we charge the operation nothing but use the pre-paid cost for payment. This is the same for a $MULTIPOP$ operation, since that is just a series of $POP$ operations. Therefore we always have enough stored up in pre-paid amounts to pay for the $POP$ and $MULTIPOP$ operations. And since the stack is always non-negative we also ensure that the amount stored up in credit is always non-negative as well so we will never run out of coins.
+
+\subsection{E}
+
+Since we know:
+
+$\bullet $ That for any sequence of $n$ $PUSH$, $POP$, and $MULTIPOP$ operations, amortized cost upper bounds the total cost by definition.
+
+$\bullet$ And the total credit stored in the stack is the difference between the amortized cost and the total cost.
+
+$\bullet$ Therefore the total credit is always nonnegative.
+
+$\bullet$ We also know that for any $POP$ operation, there must have been a previous $PUSH$ operation.
+
+$\bullet$ Therefore we know that since the amortized cost is $O(n)$ then the total cost must also be $O(n)$
+
+\subsection{F}
+
+Since a $MULTIPUSH$ operation is simply a series of $PUSH$ operations executed $k$ times on an object. The amortized cost of the $MULTIPUSH$ operation would be $2k$. This is not different, however, from individually pushing an object $k$ times and so the total cost would be dependent on the number of elements in the stack and not the method of pushing. So $POP$ and $MULTIPOP$ have unchanged amortized costs and the total amortized cost would still be $O(n)$ and so too the total actual cost.
+
+\pagebreak
+
+\section{}
+
+\subsection{A}
+
+I would use an ArrayList.
+
+\subsection{B}
+
+To insert, I would simply insert at the end of the array if there is space left. Therefore insertion would take $O(1)$ time. If there is no space left, create a new array of size $2n$ and copy over the $n$ elements, $O(n)$ time. So for the first $n$ elements insertion is constant time.
+
+\subsection{C}
+
+To delete the largest $\lceil \frac{n}{2} \rceil$ elements, since to achieve constant insertion the array would need to be unsorted, I would use the median method to split the array into elements larger than the median and smaller than the median. That way we are left with a half of the array that is strictly larger than the other half. Deleting that half would be done in constant $O(1)$ time and partitioning by relation to the median would be done in $O(n)$ time.
+
+\subsection{D}
+
+Since we probably don't want to measure exact runtime, an individual operation can take at the worst case $O(n)$ time, I'm going to assess runtime in the average case where there are a sequence of operations being performed.
+
+\subsection{E}
+
+The potential function $\Phi$ would be defined as the number of elements present in the Array. The potential of the empty Array, $D_{0}$ would be set to $0$. So $\Phi(D_{0}) = 0$.
+
+\pagebreak
+
+\subsection{F}
+
+From the TextBook we know $\hat{c_{i}} = c_{i} + \Phi(D_{i}) - \Phi(D_{i-1})$.
+
+For the $INSERT$ operation, we know that for an Array containing $n$ elements, after the operation it would contain $n+1$ elements. Therefore we know $\Phi(D_{i}) - \Phi(D_{i-1}) = (n+1) - n = 1$. So $\hat{c_{i}} = c_{i} + 1$. Since $c_{i}$ is the actual cost of the insert operation. Assuming the insertion is in an array containing $n-1$ elements, $c_{i} = 1$. Therefore for the $INSERT$ operation we have $\hat{c_{i}} = 2$, so $\hat{c_{i}}$ for $INSERT$ is constant.
+
+For the $DELETE-HALF$ operation, we know that for an Array containing $n$ elements, after the operation it would contain $\lfloor \frac{n}{2} \rfloor$ elements. Therefore we know $\Phi(D_{i}) - \Phi(D_{i-1}) = \frac{n}{2} - n = \frac{-n}{2}$. So $\hat{c_{i}} = c_{i} - \frac{n}{2}$. Since $c_{i}$ is the actual cost of the $DELETE-HALF$ operation, $c_{i} = \frac{n}{2}$ and so we have $\hat{c_{i}} = 0$.
+
+\subsection{G}
+
+
+
+$\indent\bullet$ Since we know by our definition of $\Phi$ that $\Phi(D_{i}) \geq \Phi(D_{0})$ (because the number of elements in the array will never be negative)
+
+$\bullet$ This means that the total amortized cost is an upper bound on the total cost.
+
+$\bullet$ So for a sequence of $m$ operations, we have $O(m)$
+
+
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

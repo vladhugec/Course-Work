@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 12
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{colortbl}
+\usepackage{multirow}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 160}
+\def\subjname{Introduction to Algorithms}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 13 Part 2}
+
+\section{Problem 3}
+
+Stable: Bubble sort, Insertion sort, Merge sort, Counting sort, Radix Sort $\newline$
+Not Stable: Quick sort, Heap sort, Selection sort $\newline$
+Can be made stable: All non-stable can be made into stable by taking into account the positions of the elements prior to the sort $\newline$
+
+\pagebreak
+
+\section{Problem 4}
+
+Yes, $SELECTION$ with groups of 3 does find the $k$-th smallest element, however it will not run in linear time since we don't reduce the subproblems as efficiently as with groups of 5. With groups of 3 we are still left with subproblems of size $n$ whereas with groups of 5 and larger the problem get reduced to size of less than $n$.
+
+\pagebreak
+
+\section{Problem 7}
+
+QUICKSORT: Depending on implementation, chooses either the first or last element of array as pivot.$\newline$
+SELECTION: Just as QUICKSORT, chooses either the first or last element as pivot.$\newline$
+RANDOMIZED SELECTION: The pivot is chosen at random uniformly using a random number generator from (start,end)$\newline$
+
+\pagebreak
+
+\section{Problem 21}
+
+For a vertex to be a cut vertex as a function of its discovery time, for two nodes, $u, v$, where $u$ is a parent and $v$ is a child. Let $d[v]$ be the discovery time for a node $v$. Let $L[u]$ be the lowest node that can be reached from any vertex. Then if $L[v] \geq d[u]$ then  $u$ is a cut vertex.
+
+
+
+
+
+
+
+
+
+ 
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

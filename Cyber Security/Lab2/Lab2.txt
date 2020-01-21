@@ -1,0 +1,198 @@
+set1.pcap
+
+	1. 482
+
+	2. FTP
+
+	3. Since FTP transfers Data in plain text it makes it easy for someone listening in / spoofing traffic to hijack usernames and passwords as well as data in the transfer.
+
+	4. SFTP
+
+	5. 192.168.1.8
+
+	6. User: woodworm
+	   Pass: BabyShark
+
+	7. 5
+
+	8. 
+		1. 1bBC3oWu.jpg
+		2. b5j6898D.jpg
+		3. geer.blackhat.6viii14.txt
+		4. x66oyPJx.jpg
+		5. xcfgNGy3.jpg
+
+	9. Files have been included in submission
+
+
+
+
+
+
+set2.pcap
+
+	10. 76409
+
+	11. 2
+		USER: wbgapp31216
+		PASS: Q827wO6656!nW99_a1
+
+		USER: ventas@wekiguatemala.com.gt
+		PASS: "$Alesgt1.1"
+
+	12. For USER: wbgapp31216
+		Protocol -> HTTP
+		Server IP -> 176.58.103.138
+		Domain -> utils.wbg-server.se
+		Port # -> 80
+	    
+	    For USER: ventas@wekiguatemala.com.gt
+		Protocol -> IMAP
+		Server IP -> 74.220.219.141
+		Domain -> com.android.email
+		Port # -> 143
+
+	13. Both USER/PASS pairs granted access
+
+	14. All IP addresses with corresponding domain name
+
+	    I used the "Resolve Addresses" feature, then scanned the document for the host section and copied the information down below:
+
+151.101.1.181	prod.taboola.map.fastly.net
+72.21.91.113	cs84.wac.edgecastcdn.net
+17.139.246.7	mt-ingestion-service-pv.itunes-apple.com.akadns.net
+52.94.224.25	mads.amazon.com
+31.13.77.49	mmx-ds.cdn.whatsapp.net
+169.46.12.79	api.south.kontagent.net
+104.244.46.231	wildcard.twimg.com
+23.215.130.184	a1089.d.akamai.net
+172.217.4.142	clients.l.google.com
+169.46.12.88	api.south.kontagent.net
+172.217.5.74	googleapis.l.google.com
+172.217.5.202	googleapis.l.google.com
+23.253.220.65	schemaverse.marcneuwirth.com
+169.46.12.66	api.south.kontagent.net
+151.101.193.181	prod.taboola.map.fastly.net
+165.227.0.37	vtfbctf.com
+216.115.100.123	fd-geoycpi-uno.gycpi.b.yahoodns.net
+169.46.12.69	api.south.kontagent.net
+172.217.11.66	pagead46.l.doubleclick.net
+169.46.12.72	api.south.kontagent.net
+23.203.180.198	e6858.dsce9.akamaiedge.net
+172.217.4.129	googlehosted.l.googleusercontent.com
+23.203.204.8	e673.e9.akamaiedge.net
+23.45.86.46	e4478.a.akamaiedge.net
+17.139.246.6	mt-ingestion-service-pv.itunes-apple.com.akadns.net
+17.253.23.207	cdn-icloud-content.g.aaplimg.com
+218.205.81.155	ps.cname2.igexin.com
+104.244.46.71	wildcard.twimg.com
+192.31.80.30	d.gtld-servers.NET
+216.58.216.46	connectivitycheck.android.com
+17.56.160.246	api.smoot-apple.com.akadns.net
+151.101.65.181	prod.taboola.map.fastly.net
+23.203.233.109	e2546.dsce4.akamaiedge.net
+184.24.107.198	e1879.e7.akamaiedge.net
+169.46.12.84	api.south.kontagent.net
+64.4.54.254	cy2.vortex.data.microsoft.com.akadns.net
+107.23.77.203	gregord-elb-298228113.us-east-1.elb.amazonaws.com
+23.5.251.27	e8218.dscb1.akamaiedge.net
+216.58.193.202	googleapis.l.google.com
+17.172.224.47	apple.com
+115.231.99.203	ps.cname2.igexin.com
+192.12.94.30	e.gtld-servers.NET
+54.239.17.86	completion.amazon.com
+17.173.66.102	p51-buy.itunes-apple.com.akadns.net
+192.26.92.30	c.gtld-servers.NET
+74.125.28.188	mobile-gtalk.l.google.com
+23.215.130.192	a1089.d.akamai.net
+169.46.12.93	api.south.kontagent.net
+169.46.12.68	api.south.kontagent.net
+104.244.46.39	wildcard.twimg.com
+208.71.44.31	fd-geoycpi-uno.gycpi.b.yahoodns.net
+17.139.246.5	mt-ingestion-service-pv.itunes-apple.com.akadns.net
+17.125.252.5	sp11p03sa.guzzoni-apple.com.akadns.net
+169.46.12.74	api.south.kontagent.net
+104.27.182.94	warl0ck.gam3z.com
+172.217.4.131	gstaticadssl.l.google.com
+104.41.208.54	production-roundrobin.skype-registar.akadns.net
+192.5.6.30	a.gtld-servers.NET
+172.217.11.74	googleapis.l.google.com
+95.213.11.139	api.vk.com
+104.68.97.2	e12930.ksd.akamaiedge.net
+34.201.64.150	lc80.dsr.livefyre.com
+192.33.14.30	b.gtld-servers.NET
+115.233.212.147	ps.cname2.igexin.com
+151.101.129.181	prod.taboola.map.fastly.net
+17.142.160.59	apple.com
+216.58.216.4	www.google.com
+72.21.206.140	s.amazon-adsystem.com
+52.45.146.29	gregord-elb-298228113.us-east-1.elb.amazonaws.com
+87.240.165.81	api.vk.com
+17.178.96.59	apple.com
+104.27.183.94	warl0ck.gam3z.com
+216.115.100.124	fd-geoycpi-uno.gycpi.b.yahoodns.net
+169.46.12.70	api.south.kontagent.net
+208.71.44.30	fd-geoycpi-uno.gycpi.b.yahoodns.net
+172.217.11.170	googleapis.l.google.com
+17.253.23.205	cdn-icloud-content.g.aaplimg.com
+2607:f8b0:4007:804::2002	pagead46.l.doubleclick.net
+2400:cb00:2048:1::681b:b65e	warl0ck.gam3z.com
+2001:500:856e::30	d.gtld-servers.NET
+2400:cb00:2048:1::681b:b75e	warl0ck.gam3z.com
+2001:503:231d::2:30	b.gtld-servers.NET
+2001:503:83eb::30	c.gtld-servers.NET
+2607:f8b0:4007:809::2004	www.google.com
+2607:f8b0:4007:800::2003	ssl.gstatic.com
+2001:503:a83e::2:30	a.gtld-servers.NET
+
+
+
+
+
+set3.pcap
+
+	15. 3
+		USER: brodgers
+		PASS: TheyPlayedWithGreatCharacter
+
+		USER: dmoyes
+		PASS: IAmAFootballGenius
+
+		USER: aoursler
+		PASS: Id10tExpert
+
+
+	16. For USER: brodgers
+		Protocol -> HTTP
+		Server IP -> 130.64.23.35
+		Domain -> www.eecs.tufts.edu/~cgregg/grades/
+		Port # -> 80
+
+	    For USER: 
+		Protocol -> HTTP
+		Server IP -> 130.64.23.35
+		Domain -> www.eecs.tufts.edu/~cgregg/grades/
+		Port # -> 80
+
+	    For USER: 
+		Protocol -> HTTP
+		Server IP -> 130.64.23.35
+		Domain -> www.eecs.tufts.edu/~cgregg/grades/
+		Port # -> 80
+
+	17. None successfully granted access
+
+	18. I found the plain-text password pairs by using ettercap with the command "ettercap -T -r set3.pcap | grep "PASS:"
+
+	19. I looked for the server IP in Wireshark and found all three separate access requests, I then followed the HTTP streams and saw that on each of the three access requests I got the same message:
+
+	<p>This server could not verify that you
+	are authorized to access the document
+	requested.  Either you supplied the wrong
+	credentials (e.g., bad password), or your
+	browser doesn't understand how to supply
+	the credentials required.</p>
+
+And so I believe none of the USER/PASS pairs worked.
+
+	20. Each of the three passwords I found were sent over HTTP. HTTP is not a secure protocol and sending a login request over HTTP is a bad bad idea since the login information is sent unencrypted and can easily be viewed by anyone. Using HTTPS is a secure alternative that does not send login info in plain-text

@@ -1,0 +1,20 @@
+// stack.ums
+//
+// sets up stack, sets r1 to 0 and r2 to end of stack
+//
+// By: Vladimir Hugec
+// comp40-hw8
+
+.section init
+.zero r0
+.temps r6,r7
+
+.section stk
+.space 10000
+
+endstack:
+        .section init
+        .zero r0
+start:
+        r1 := 0
+        r2 := endstack

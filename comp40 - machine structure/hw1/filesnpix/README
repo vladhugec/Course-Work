@@ -1,0 +1,11 @@
+NAMES : Vladimir Hugec and Ethan Tu
+
+To our knowledge, our code should meet all requiremts for this assignment
+
+Our code is segmented in the following way:
+    simlines.c - contains main
+    simlines.h - header file declarations functions
+    simlinesFunc.c - function implementations
+Our makefile was edited and submitted along with the rest of the assignment
+
+I would say around ~20 hours were spent on this assignment

@@ -1,0 +1,57 @@
+-> length
+<procedure> : (forall ('a) ((list 'a) -> int))
+-> cons
+<procedure> : (forall ('a) ('a (list 'a) -> (list 'a)))
+-> car
+<procedure> : (forall ('a) ((list 'a) -> 'a))
+-> cdr
+<procedure> : (forall ('a) ((list 'a) -> (list 'a)))
+-> '()
+() : (forall ('a) (list 'a))
+-> (val length-int (@ length int))
+length-int : ((list int) -> int)
+-> (val cons-bool (@ cons bool))
+cons-bool : (bool (list bool) -> (list bool))
+-> pair
+<procedure> : (forall ('a 'b) ('a 'b -> (pair 'a 'b)))
+-> (val car-pair (@ car (pair sym int)))
+car-pair : ((list (pair sym int)) -> (pair sym int))
+-> (val cdr-sym (@ cdr sym))
+cdr-sym : ((list sym) -> (list sym))
+-> (val empty-int (@ '() int))
+() : (list int)
+-> (val useless-length (@ length ((list bool) -> int)))
+useless-length : ((list ((list bool) -> int)) -> int)
+-> (length-int '(1 4 9 16 25))
+5 : int
+-> (cons-bool #t '(#f #f))
+(#t #f #f) : (list bool)
+-> (car-pair ((@ cons (pair sym int)) 
+                ((@ pair sym int) 'Office 231) 
+                (@ '() (pair sym int))))
+(Office . 231) : (pair sym int)
+-> (cdr-sym '(a b c d))
+(b c d) : (list sym)
+-> (useless-length '(#t #f #f))
+type error: function of type ((list ((list bool) -> int)) -> int) got argument of type (list bool)
+-> (@ length bool)
+<procedure> : ((list bool) -> int)
+-> ((@ length bool) '(#t #f #f))
+3 : int
+-> (val n (+ n 1))
+Name n not found
+-> (val id1 (type-lambda ['a] (lambda ([x : 'a]) x)))
+id1 : (forall ('a) ('a -> 'a))
+-> (val id2 (type-lambda ['b] (lambda ([x : 'b]) x)))
+id2 : (forall ('b) ('b -> 'b))
+-> (set id1 id2)
+<procedure> : (forall ('a) ('a -> 'a))
+-> (use type-tests-id.tus)
+All 6 tests passed.
+-> (val strange
+       (type-lambda ['a] 
+           (type-lambda ['a]
+                (lambda ([x : 'a]) x))))
+strange : (forall ('a) (forall ('a) ('a -> 'a)))
+-> (@ strange int)
+<procedure> : (forall ('a) ('a -> 'a))

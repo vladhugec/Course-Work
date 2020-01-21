@@ -1,0 +1,15 @@
+#--------------------------------------------------------------------
+#
+#                          Bitwise Complement Macro
+#
+#        TWO PARAMETERS: p1 & p2
+#        p1 := not p2, unconditionally
+#
+#        BY: Vladimir Hugec // comp40-lab12
+#
+#--------------------------------------------------------------------
+
+macro com
+loadval rt, 4294967295        # 2^32 for all bits activated
+nand p1,p2,rt
+mend

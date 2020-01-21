@@ -1,0 +1,10 @@
+group is
+  $/basis.cm
+  env-sig.sml
+  env-module.sml
+  error-sig.sml
+  error-module.sml
+  suspension-sig.sml
+  suspension-module.sml
+  stream-sig.sml
+  stream-module.sml

@@ -1,0 +1,71 @@
+               COMP 40 Lab: Naming brightness functions
+                             (for pairs)
+
+
+Partner's:
+
+Partner 1:  Name______________    Login ____________
+
+Partner 2:  Name______________    Login ____________
+
+Partner 3:  Name______________    Login ____________ (if any)
+
+
+This file goes with part 8 of the first lab.  The idea is to give you
+some practice thinking about the names of functions.  The problem is a
+simple one, so we're going the software equivalent of shooting a fly
+with an elephant gun, but because the problem is so simple, it makes
+it easy to have a short practice session.
+
+Here is the problem:
+
+  - Suggest three different functions that might be useful in
+    implementing `brightness`.
+
+  - For each function, suggest three possible names.
+
+  - For each function, say which name you think is most appropriate
+    and *why*.
+
+
+
+Function #1:
+
+  Job:
+
+  Candidate names:
+
+  Best name:
+
+  Why the given name is the best:
+
+
+
+
+
+Function #2:
+
+  Job:
+
+  Candidate names:
+
+  Best name:
+
+  Why the given name is the best:
+
+
+
+
+
+Function #3:
+
+  Job:
+
+  Candidate names:
+
+  Best name:
+
+  Why the given name is the best:
+
+
+

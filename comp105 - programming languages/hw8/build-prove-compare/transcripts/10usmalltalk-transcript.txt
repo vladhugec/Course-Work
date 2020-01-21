@@ -1,0 +1,150 @@
+-> (use shapes.smt)     ; load shape classes defined in this section
+-> (val c (new Circle))
+<Circle>
+-> (val s (new Square))
+<Square>
+-> (adjustPoint:to: s 'West (location: c 'East))
+<Square>
+-> (val t (adjustPoint:to: (new Triangle) 'Southwest (location: s 'East)))
+<Triangle>
+-> (val pic (empty Tikzpicture))
+<Tikzpicture>
+-> (add: pic c)
+<Tikzpicture>
+-> (add: pic s)
+<Tikzpicture>
+-> (add: pic t)
+<Tikzpicture>
+-> (draw pic)
+\begin{tikzpicture}[x=4pt,y=4pt]
+\draw (0,0)ellipse(1 and 1);
+\draw (3,1)--(1,1)--(1,-1)--(3,-1)--cycle;
+\draw (4,2)--(3,0)--(5,0)--cycle;
+\end{tikzpicture}
+<Tikzpicture>
+-> (drawOn: (new Shape) pic)
+Run-time error: subclass failed to implement a method that was its responsibility
+Method-stack traceback:
+  Sent 'subclassResponsibility' in shapes.smt, line 83
+  Sent 'drawOn:' in standard input, line 41
+-> (class B Object []
+     (method m1 () (m2 self))
+     (method m2 () 'B))
+-> (class C B []
+     (method m2 () 'C))
+-> (val x (new C))
+-> (m1 x)
+C
+-> (val ns (new List))
+List( )
+-> (addFirst: ns 3)
+-> (addFirst: ns 2)
+-> (addFirst: ns 1)
+-> ns
+List( 1 2 3 )
+-> (val ms (new List))
+List( )
+-> (addLast: ms 1)
+-> (addLast: ms 2)
+-> (addLast: ms 3)
+-> ms
+List( 1 2 3 )
+-> (= ns ms)
+<False>
+-> (similar: ns ms)
+<True>
+-> (isKindOf: 3 Number)
+<True>
+-> (isMemberOf: 3 Number)
+<False>
+-> (isKindOf: '3 Number)
+<False>
+-> (val index 0)
+-> {(set index (+ index 1))}
+<Block>
+-> index
+0
+-> (value {(set index (+ index 1))})
+1
+-> index
+1
+-> (val incrementBlock {(set index (+ index 1))})
+<Block>
+-> (val sumPlusIndexSquaredBlock {(+ sum (* index index))})
+<Block>
+-> (val sum 0)
+0
+-> (set sum (value sumPlusIndexSquaredBlock))
+1
+-> (value incrementBlock)
+2
+-> (set sum (value sumPlusIndexSquaredBlock))
+5
+-> (if (< sum 0) {'negative} {'nonnegative})
+nonnegative
+-> (if (< sum 0)  'negative   'nonnegative )
+Run-time error: Symbol does not understand message value
+Method-stack traceback:
+  Sent 'value' in predefined classes, line 25
+  Sent 'ifTrue:ifFalse:' in predefined classes, line 19
+  Sent 'if' in standard input, line 98
+-> (while {(< sum 10000)} {(set sum (* 5 sum)) (println sum)})
+25
+125
+625
+3125
+15625
+nil
+-> (val s (new Set))
+Set( )
+-> (size s)
+0
+-> (add: (add: s 2) 'abc)
+Set( 2 abc )
+-> (includes: s 2)
+<True>
+-> (add: s 2)
+Set( 2 abc )
+-> (set s (asSet '(1 2 3 1 2 3)))
+Set( 1 2 3 )
+-> (addAll: s '(1 2 3 a b c d e f))
+Set( 1 2 3 a b c d e f )
+-> (includes: s 'b)
+<True>
+-> (removeAll: s '(e f))
+Set( 1 2 3 a b c d )
+-> (val s2 (reject: s [block (x) (isKindOf: x Number)]))
+Set( a b c d )
+-> (val xs (new List))
+List( )
+-> (addLast: xs 'a)
+List( a )
+-> (add: xs 'b)
+List( a b )
+-> (addFirst: xs 'z)
+List( z a b )
+-> (first xs)
+z
+-> (addFirst: xs 'y)
+List( y z a b )
+-> (at: xs 2)
+a
+-> (removeFirst xs)
+y
+-> xs
+List( z a b )
+-> (val two (num:den: Fraction 2 1))
+-> (val epsilon (num:den: Fraction 1 10))
+1/10
+-> (val root2 (sqrtWithin: two epsilon))
+17/12
+-> (val epsilon (/ 1 100))
+1/100
+-> (val root2 (sqrtWithin: (asFraction 2) epsilon))
+577/408
+-> (val epsilon (asFloat (/ 1 100)))
+1x10^-2
+-> (sqrtWithin: (asFloat 2) epsilon)
+14142x10^-4
+-> (add: (add: (add: (new List) 1) 2) 3)
+List( 1 2 3 )

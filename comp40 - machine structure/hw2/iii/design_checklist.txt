@@ -1,0 +1,39 @@
+1.	What is the abstract thing you are trying to represent? 
+
+    A unique, one-to-one correspondence to elements of multiple UArray_Ts. 
+    This will be a 2-Dimentional array called UArray2_T.
+
+2.	What functions will you offer, and what are the contracts those functions must meet?
+
+- void UArray2_init(UA uarray, int width, int height, int size, void *elems)
+
+- UArray2_T UArray2_new(int width, int height, int size)
+
+- void *UArray2_at(UArray2_T uarray, int row, int col)
+
+- int UArray2_length(UArray2_T uarray)
+
+- int UArray2_width(UArray2_T uarray)
+
+- int UArray2_height(UArray2_T uarray)
+
+- int UArray2_size(UArray2_T uarray)
+
+- UArray2_map_col_major(test_array, check_and_print, &OK)
+
+- UArray2_map_row_major(test_array, check_and_print, &OK)
+
+- void UArray2_free(UArray2_T *uarray);
+
+3.	What examples do you have of what the functions are supposed to do?
+
+4.	What representation will you use, and what invariants will it satisfy? 
+    
+5.	How does an object in your representation correspond to an object in the 
+    world of ideas? That is, what is the inverse mapping from any particular 
+    representation to the abstraction that it represents. 
+
+6.	What test cases have you devised?
+
+7.	What programming idioms will you need?
+

@@ -1,0 +1,54 @@
+###
+### mid3.cpp
+### program to print out the middle of three input values
+###
+### usage:   ./mid3
+### input:   three floating point number
+### output:  the middle of the three input values
+### note:    Do not prompt the user, do not print explanations on output.
+###          In fact, do not change main at all, and don't use input or
+###          print in mid3.
+###
+### modified by:  Vladimir Hugec
+### modified on:  Feb 2, 2018
+###
+
+def main():
+    numbers = open('mid3.data')
+
+    for line in numbers:
+        nums, result = line.split(':')
+        a, b, c = nums.split()
+    
+        a = float(a)
+        b = float(b)
+        c = float(c)
+    
+
+    # find the middle number
+        middle = mid3(a, b, c)
+
+    # print it on the screen 
+        print(middle)
+
+#
+# mid3
+# return the middle of three values passed as arguments
+#
+
+def mid3(a, b, c):
+    if a > b and b > c:
+        return b # b must be the middle value
+    elif b > a and a > c:
+        return a # a must be the middle value
+    elif a > c and c > b:
+        return c # c must be the middle value
+    elif c > a and a > b:
+        return a # a must be the middle value
+    elif c > b and b > a:
+        return b # b must be the middle value
+    elif b > c and c > a:
+        return c # c must be the middle value
+
+if __name__ == '__main__':
+    main()

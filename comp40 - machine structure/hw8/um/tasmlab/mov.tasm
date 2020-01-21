@@ -1,0 +1,16 @@
+#--------------------------------------------------------------------
+#
+#                          mov macro
+#
+#        TWO PARAMETERS: p1 & p2
+#        p1 := p2, unconditionally
+#
+#        BY: Vladimir Hugec // comp40-lab12
+#
+#--------------------------------------------------------------------
+
+
+macro mov
+loadval rt, 1        # if $r[C] =/= 0 -> $r[A] := $r[B], so set $r[C]==1
+cmov p1,p2,rt        # do conditional move on p1($r[A]) & p2($r[B])
+mend

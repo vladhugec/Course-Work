@@ -1,0 +1,28 @@
+Reading Comprehention Q's:
+
+1. 17
+
+2. B)
+
+3. No
+   Yes
+   
+4. 
+   a) 9 - (12/3)
+   b) (- 9 (/ 12 3))
+   
+5. 
+   a) 0 & n = m+1 or m = n - 1
+   b) code that checks wether n = 0 or n /= 0
+      if n /= 0 then it must have been formed by m+1
+   c) n > 0
+   d) (f (- n 1))
+
+6. Good
+
+7.
+   a) To me this is okay since factorial can only mean one thing,
+      as in it will always mean n*(n-1)*(n-2)....*1
+   b) A function named power might mean "multiply x by itself n times"
+      but it could very well mean something completly different, the
+      name itself isnt fully unambiguous like the factorial function

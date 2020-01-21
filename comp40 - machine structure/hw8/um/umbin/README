@@ -1,0 +1,41 @@
+UM binaries for COMP 40
+
+The file umbin.zip contains the following binaries:
+
+  • File cat.um copies standard input to standard output. Try, for example
+
+      echo Hello, world. | ./um cat.um
+
+  • File hello.um prints a traditional message.
+  • File midmark.um is a mid-size benchmark which when run prints the
+    following:
+
+     == UM beginning stress test / benchmark.. ==
+    4.   12345678.09abcdef
+    3.   6d58165c.2948d58d
+    2.   0f63b9ed.1d9c4076
+    1.   8dba0fc0.64af8685
+    0.   583e02ae.490775c0
+    Benchmark complete.
+
+    On a well-optimized Universal Machine, this program runs in about one
+    second. If yours take somewhat longer, it may still be OK. Performance
+    targets are given in the assignment(s).
+  • File sandmark.umz is a self-decompressing benchmark which when run produces
+    file sandmark.out. Reasonable running times are under a minute.
+  • File advent.umz is a rather unsatisfying text adventure game. Don't forget
+    to switch your goggles!
+  • File codex.umz is a mysterious codex; even on an optimized Universal
+    Machine it may take 30 seconds or more to launch. But once you get it
+    working you'll be rewarded: your Universal Machine will boot a simple
+    operating system, and if you are a bit of a hacker, you'll find a series of
+    puzzles of increasing difficulty. Don't get too distracted; this stuff is
+    pure entertainment.
+
+If you choose the wrong abstractions, your performance could easily be off by a
+factor of 100 or even 1000. Please be sure you understand the performance
+requirements explained in the instructions for your assignment. Optimize enough
+to meet those requirments, but don't over-optimize: the cleanliness of your
+code is as important as its performance (except when we ask you to try for
+maximum performance).
+

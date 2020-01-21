@@ -1,0 +1,22 @@
+#			includetest.tasm
+#                   Author: Noah Mendelsohn
+#
+#      This program is an adaptation of simplemacro.tasm. 
+#
+#      Here we illustrate the use of "include" to put the macro in a
+#      separate file
+#
+
+#--------------------------------------------------------------------
+#                            main
+#--------------------------------------------------------------------
+
+include writechar.tasm
+
+temp r6
+loadval r3,65                  # This is the letter A in ASCII
+writechar r3                   # invoke the macro: p1 is set to r3
+loadval r5,2
+add r3,r3,r5
+writechar r3                   # Output the result of the add
+halt

@@ -1,0 +1,122 @@
+// printd.ums
+//
+// print module for multiple digit numbers
+//
+// By: Vladimir Hugec
+// comp40-hw8
+//
+//                r0 -> zero register
+//                r1 -> return addresses
+//                r2 -> stack pointer
+//                r3 -> # things in stack
+//                r4 -> set to top of stack 
+//                    (to add to stack without losing location of current value)
+//                r5 -> holds number being manipulated / printed
+//                r6 -> general / temp
+//                r7 -> general / temp
+
+.section text
+.zero r0
+.temps r6, r7
+
+// check if there is anything to print, if not goto waiting
+// else set r4 to r2
+init_print_loop:
+        if (r3 == 0) goto waiting
+        r4 := r2
+
+// main printing loop, end condition when r4 is at endstack
+// increment r4 with each thing printed
+// load thing to be printing into r5
+// goto init_print and repeat
+print_loop:
+        if (r4 == endstack) goto end_print using r5
+        output ">>> "
+        r5 := m[r0][r4]
+        r4 := r4 + 1
+        push r4 on stack r2
+        push r5 on stack r2
+        goto init_print_digits linking r1
+        output "\n"
+        goto print_loop
+
+// saves value to be printed in r5
+// saves return address (r1) on stack
+// saves # of things in stack on stack
+init_print_digits:
+        pop r5 off stack r2
+        push r1 on stack r2
+        push r3 on stack r2
+
+// mask r5 with max_neg value, if == 0 -> positive else negative
+check_digits:
+        r3 := 0x80000000
+        r3 := r5 & r3
+        r4 := negative
+        if (r3 != r0) goto r4
+        r3 := r0
+        goto check_num_digits linking r1
+
+// main function for printing individual digits
+// end condition, number == 0
+// mod value by 10 each loop and store result on stack
+// divide value by 10 and repeat until value is zero
+// this will leave x single-digit numbers on top of stack 
+// where x is number of digits
+split_digits:
+        if (r5 == r0) goto print_digits using r1
+        r4 := r5 mod 10
+        r3 := r3 + 1
+        push r4 on stack r2
+        r5 := r5 / 10
+        goto split_digits
+        
+// checks whether or not the number to be printed is one or more digits
+check_num_digits:
+        push r1 on stack r2
+        r4 := r5 / 10
+        if (r4 == r0) goto print_one using r1
+        pop r1 off stack r2
+        goto r1
+print_one:
+        r5 := r5 + '0'
+        output r5
+        pop r1 off stack r2
+        goto next_value
+
+// checks for negative values, if value is max negative
+// goto max_neg else output a negative sign and flip
+// the sign in the value register (r5)
+negative:
+        r3 := 2147483648
+        if (r5 == r3) goto max_neg using r4
+        output "-"
+        r5 := -r5
+        r3 := r0
+        goto check_num_digits linking r1
+        goto split_digits
+max_neg:
+        r5 := -r5
+        r3 := r0
+        goto check_num_digits linking r1
+        goto split_digits
+        
+// end condition when counter is at 0 (r3)
+// pop values off stack, convert to ascii and output
+// repeat until all digits of number have been printed
+print_digits:
+        if (r3 == 0) goto next_value
+        pop r5 off stack r2
+        r3 := r3 - 1
+        r5 := r5 + '0'
+        output r5
+        goto print_digits
+        
+// resets the registers for next number printing loop
+next_value:
+        pop r3 off stack r2
+        pop r1 off stack r2
+        pop r4 off stack r2
+        goto r1
+end_print:
+        goto waiting

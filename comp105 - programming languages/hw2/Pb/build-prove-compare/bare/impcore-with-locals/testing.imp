@@ -1,0 +1,14 @@
+(define add-odds-to (n) 
+    (locals i sum)
+    (begin
+        (set i 1)
+        (set sum 0)
+        (while (<= i n)
+            (begin
+                (set sum (+ sum i))
+                (set i (+ i 2))))
+        sum))
+        
+(check-expect (add-odds-to 3) 4)
+(check-expect (add-odds-to 3) 5)
+        

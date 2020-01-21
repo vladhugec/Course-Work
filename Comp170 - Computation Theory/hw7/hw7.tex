@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 170, Fall 2019
+% Homework 7
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 170}
+\def\subjname{Computation Theory}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 7}
+
+\section{}
+
+\subsection{A}
+
+According to Theorem 4.5 in Sipser, we know that the problem of whether two DFA's recognize the same language is decidable. And according to Theorem 4.3 also in Sipser we know that a REG-EX that generates a string $w$ is also decidable since it converts the REG-EX into its equivalent NFA. Furthermore we also know that each NFA has its equivalent DFA. Therefore, extrapolating from these known Theorems we can solve: 
+\begin{center}
+$EQ_{REX} = \{\langle R_{1}, R_{2} \rangle |$ $R_{1}$, $R_{2}$ are regular expressions and $L(R_{1}) = L(R_{2})$\}
+\end{center}
+
+Let $P =$ "On input $\langle A_{R}, B_{R} \rangle$ where $A_{R}$ and $B_{R}$ are regular expressions:
+
+$\indent$ 1. Convert regular expressions $A_{R}$ and $B_{R}$ to their equivalent NFA's $\indent \indent$    $A_{N}$ and $B_{N}$ respectively using Theorem 1.54
+
+$\indent$ 2. Convert NFA's $A_{N}$ and $B_{N}$ into equivalent DFA's $A_{D}$ and $B_{D}$
+
+$\indent$ 3. Run $TM$ $F$ from Theorem 4.5 on input $\langle A_{D}, B_{D} \rangle$
+
+$\indent$ 4. If $F$ accepts, $accept$. If $F$ rejects, $reject$."
+
+$\newline$ Therefore $EQ_{REX}$ is decidable.
+
+\subsection{B}
+
+To show that the following is decidable:
+\begin{center}
+$REX_{101} = \{\langle R \rangle |$ $R$ is a regular expression, and $L(R)$ is the set of all binary strings containing $101$\}
+\end{center}
+
+Construct $Y = $"On input $\langle R \rangle$ where $R$ is a regular expression:
+
+$\indent$ 1. Let $R'$ a regular expression that generates all binary strings containing $101$.
+
+$\indent$ 2. Run $TM$ $P$ from above on input $\langle R, R' \rangle$
+
+$\indent$ 3. If $P$ accepts, $accept$. If $P$ rejects, $reject$.
+
+$\newline$ Therefore $REX_{101}$ is decidable.
+
+\pagebreak
+
+\section{}
+
+To prove that the following language is decidable:
+\begin{center}
+$ONE_{PDA} = \{\langle P \rangle |$ $P$ is a $PDA$ with a single active accept state\}
+\end{center}
+Construct $Q =$ "On input $\langle P \rangle$ where $P$ is a PDA:
+
+$\indent$ 1. The equivalence of PDA's to CFG's states we can convert a PDA $\indent \indent P$ to a CFG $C$
+
+$\indent$ 2. Then run $TM$ $R$ from Theorem 4.8 on input $\langle C \rangle$
+
+$\indent$ 3. If $R$ accepts, $reject$. If $R$ rejects, $accept$."
+
+$\newline$ Since, if there is only one accept state, this must be true so long as the PDA accepts something, we have shown that if the Grammer of the PDA is not empty, it generates some strings and therefore must accept something. And so we know that $ONE_{PDA}$ is decidable.
+
+\pagebreak
+
+\section{}
+
+\subsection{A}
+
+We know that in-order for the composition of two functions, $g \circ f$ to be Turing-Simulable, it must satisfy both premises 1 and 2. Since we know both $g$ and $f$ are Turing-simulable. This means that both $f$ and $g$ satisfy premises 1 and 2. It then follows that since the $TM$ $T_{f}$ halts with output $b' \in B$, on its tape, where $b' = f(b)$, $g \circ f = g(f(b) = g(b') = b''$. And so the composition of two Turing-simulable functions must also be Turing-simulable.
+
+\subsection{B}
+
+To prove that the following language is decidable:
+\begin{center}
+$\{\langle m,b \rangle |$ $\exists b' \in B, |b'| \leq m$ and $f(b')=b$\}
+\end{center}
+Construct $A =$ "On input $\langle m,b \rangle$ where $m$ is a non-negative integer and $b$ is a binary string:
+
+$\indent$ 1.  Define function $f^{-1}(b)$ and let that be the function of the $TM$ $T_{f}$
+
+$\indent$ 2.  Run $T_{f}$ on input $\langle m, b \rangle$.
+
+$\indent$ 3. We know $T_{f}$ now halts with output $b'$ on the tape, if $|b'| \leq m$, $accept$. Else, $reject$."
+
+$\newline$ Therefore the language is decidable.
+
+
+
+
+\enddocument
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

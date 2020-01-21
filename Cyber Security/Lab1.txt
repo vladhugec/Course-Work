@@ -1,0 +1,11 @@
+1. whereis python
+2. ifconfig
+3. top
+4. netstat -ltnp
+5. ls -Ral
+6. file -I warrent.pdf
+7. more warrent.pdf
+8. arp -a
+9. China
+10. curl ipinfo.io/111.72.252.91/country
+    ^^^ -> tried to use traceroute but it kept returning "* * *" 

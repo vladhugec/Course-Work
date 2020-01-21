@@ -1,0 +1,18 @@
+// urt0.ums
+// general purpose initializer of stack and registers
+// By: Vladimir Hugec
+// comp40-hw8
+
+.zero r0
+.temps r6 r7
+.section stack        // stack with space of ten thousand words
+.space 100000
+
+endstack:
+        .section init
+_ustart:
+        r0 := 0
+        r2 := endstack
+        goto main linking r1        // r1 is return address
+        
+        halt

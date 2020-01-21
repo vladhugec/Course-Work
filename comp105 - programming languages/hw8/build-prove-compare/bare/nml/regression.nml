@@ -1,0 +1,48 @@
+;; Regression.nml
+
+
+;; LITERAL TESTS
+
+(check-principal-type #t bool)
+(check-principal-type 'a sym)
+(check-principal-type 1 int)
+(check-principal-type '(#t) (list bool))
+(check-principal-type '(a) (list sym))
+(check-type-error '(a 1 #t))
+
+
+;; IF TESTS
+
+(check-principal-type (if #t a b) sym)
+(check-type-error (if #t 1 #t))
+(check-type-error (if 1 a b))
+(check-type-error (if 1 a #t)) 
+
+
+;; BEGIN TESTS
+
+(check-principal-type (begin 'a) sym)
+(check-principal-type (begin 'a #t) bool)
+(check-type-error (begin 'a (+ 1 #t)))
+(check-principal-type (begin 'a (+ 1 1)) int)
+(check-principal-type (begin) unit)
+
+
+;; LAMBDA TESTS
+
+(check-principal-type (lambda (x) (+ 1 x)) (int -> int))
+(check-principal-type (lambda (x) (if x a b)) (bool -> sym))
+(check-type-error (lambda (x) (cons x x)))
+
+
+;; LET TESTS
+
+(define double (x) (let ([y x]) (+ x y)))
+(check-principal-type double (int -> int))
+
+
+;; LETREC TESTS
+
+(check-principal-type (letrec ([x double]) (x 1)) int)
+(check-principal-type (letrec ([f (lambda (x) (double x))]) (f 1)) int)
+

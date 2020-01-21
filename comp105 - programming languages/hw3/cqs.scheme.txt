@@ -1,0 +1,38 @@
+1)
+    a) 2 cases [Null case (empty list), non-number list case]
+    b) (if (null? xs)) -> list is empty if true
+    c) 2 cases [null case, non-ordinary-S case (functions)]
+    d) (if (null? xs)) -> empty
+2)
+    a) (car '(a b 1 2)) -> a
+    b) (cdr '(a b 1 2)) -> (b 1 2)
+    c) (= 'a 'b) -> #f
+    
+3) B
+
+4) 
+    a) (find 'Tufts   mascots) -> Jumbo
+    b) (find 'MIT     mascots) -> Beaver
+    c) (find 'Harvard mascots) -> ()
+    d) (find 'MIT (bind 'MIT 'Engineer mascots)) -> Engineer
+    
+5) (find 'x (bind 'x 'y '()) = y
+
+6) 3
+
+7) 
+    T.A) No
+    T.B) Yes
+    T.C) Yes
+    
+8) 
+    1. make-3point
+    2. 3point?
+    3. 3point-x
+    4. 3point-y
+    5. 3point-z
+    
+9)
+    (member? x (add-element y xs)) == #f (if xs doesnt already have member 
+                           x present, the question doesnt specify what xs is)
+                                            

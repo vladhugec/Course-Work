@@ -1,0 +1,54 @@
+1. 
+    a) (all? p? 5) -> 5 is not a list and therefore not permissible
+    b) (all? p? (cons '() 5)) -> (cons v vs), since vs is not a list
+                               (cons v vs) is not a list either and
+                               is not permissible
+    c) (all? number? (cons '() '()) -> permissible
+       (all? prime? (cons '() '()) -> not permissible
+       
+2. 
+    a) YES Permissible -> (list-of? prime? 5) returns #f
+    b) YES Permissible -> (list-of? prime? (cons '() 5) returns #f 
+    c) YES Permissible -> (list-of? prime? (cons '() '()) returns #f
+    
+3.
+    1. (A) It returns 10
+    2. (B) An error is raised: Run-time error: name y not found.
+    
+4. 
+    record not / or / and makes not? or? and? which can be used to see
+    if f0 takes the form of (make x f) so,
+    
+    a) (not? f0)
+    b) (and? f0)
+    c) (or? f0)
+    
+5.
+    a) #t
+    b) #f
+    c) #t
+    d) #f
+    e) #t
+    
+6. 
+    (a) (𝑥 ∨ ¬𝑥) ∧ 𝑦, which in μScheme is constructed by
+        (make-and (list2 (make-or (list2 'x (make-not 'x))) 'y))
+        
+        is solved by: '((x #f) (y #t)) or '((x #t)(y #t))
+        
+    (b) (𝑥 ∨ ¬𝑥) ∧ ¬𝑥, which in μScheme is constructed by
+        (make-and (list2 (make-or (list2 'x (make-not 'x))) (make-not 'x))),
+        
+        is solved by: '((x #f))
+        
+    (c) (𝑥 ∨ 𝑦 ∨ 𝑧) ∧ ( ¬𝑥 ∧ 𝑥) ∧ (𝑥 ∨ ¬𝑦 ∨ ¬𝑧), 
+        which in μScheme is constructedby
+        (make-and
+           (list3 (make-or (list3 'x 'y 'z))
+                  (make-and (list2 (make-not 'x) 'x))
+                  (make-or (list3 'x (make-not 'y) (make-not 'z))))))
+                  
+        is solved by: has no solution
+                
+    
+     

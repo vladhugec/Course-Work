@@ -1,0 +1,283 @@
+Written #1
+
+    For each of the following functions, specify the possible valid types of 
+    the input parameter x and the possible return types. A input is of valid 
+    type if passing that input to the function will not raise a TypeError. 
+
+    Choose from one or more of the following types:
+
+            int float string boolean None
+
+    In Python, booleans can be represented as the integers 1 and 0. But for 
+    the purpose of this exercise, pretend that is not true: a boolean can 
+    only be a boolean.
+
+    (a) def a(x):
+            return x + 1
+
+        x can have type(s): int & float
+        the function can have return type(s): int & float 
+
+
+    (b) def b(x):
+            return x + 0.1
+
+        x can have type(s): int & float
+        the function can have return type(s): float 
+
+    (c) def c(x):
+            return x > 1
+
+        x can have type(s): int & float
+        the function can have return type(s): boolean 
+
+    (d) def d(x):
+            print(x)
+
+        x can have type(s): int & string & boolean & float
+        the function can have return type(s): fuction doesn't return
+			anything, just prints
+
+    (e) def e(x):
+            return x + x
+
+        x can have type(s): int & float & string
+        the function can have return type(s): int & float & string
+
+
+Written #2
+
+    Assume the following functions have been defined in a session of Python3.
+
+        def foo(a, b, c):
+            if a:
+                return b + c
+            return b - c
+
+        def bar(x, y):
+            return foo(x < y, x, y)
+      
+    What is the type and value of the following expressions?
+
+    (a) foo(True, 1, 2)
+
+        type: func(bool, int, int) & returns int
+        value: 1 + 2
+	       -> 3
+
+    (b) bar(10, 5)
+
+        type: func(int, int) & returns int
+        value: foo(10 < 5, 10, 5)
+	       -> foo(False, 10, 5)
+	       -> 10 - 5
+	       -> 5
+
+    (b) bar(foo(1 > 2, 1, 2), 3)
+
+        type:func(func(bool, int, int), int) & returns int
+        value: bar(foo(False, 1, 2), 3)
+	       -> bar(1 - 2, 3)
+	       -> bar(-1, 3)
+	       -> foo(-1 < 3, -1, 3)
+	       -> foo(True, -1, 3)
+	       -> -1 + 3
+	       -> 2
+
+
+Written #3
+    Assume the following function have been defined in a session of Python3.
+
+    def f(x, y, z):
+        if x < y:
+            y -= x
+        else:
+            y = x - y
+        
+        if y > x:    
+            print("shark meldon")
+        elif z > x and z > y:
+            print("mark sheldon")
+        elif z > y:
+            print("tufts university")
+        else:
+            print("comp11")
+      
+    Give, if possible, a combination of x, y, z that will allow the program to
+    print each of the following strings.
+
+    (a) shark meldon
+
+        x = 1, y = 3, z = 0
+
+    (a) mark sheldon
+
+        x = 3, y = 1, z = 4
+
+    (a) tufts university
+
+        x = 3, y = 1, z = 3
+
+    (a) comp11
+
+        x = 3, y = 1, z = 2
+
+
+Written #4
+
+    Before you start working on each of the three programming exercises below, 
+    devise and write down at least three test cases. You should state clearly 
+    what the input are, and what the printed result should look like. Describe, 
+    if you can, what each of the test cases test for.
+
+    Your tests should be different from the examples given below.
+
+    Making tests before you actually begin coding is a very useful programming 
+    practice. Your tests will help you uncover bugs when you test your program.
+
+
+    Programming #1 feet.py:
+
+        test1:
+		Feet? 6
+		Inches? 10
+
+		Tests if the program works in the first place and if the
+		pluralization statements are working correctly
+
+		Correct Output:
+			2 meters, 8 centimeters
+        test2:
+		Feet? 5
+		Inches? 14
+
+		Tests if the program correctly recognizes that this
+		input is the same as:
+			Feet? 6	
+			Inches? 2
+
+		Correct Output:
+			1 meter, 88 centimeters
+        test3:
+		Feet? 5.5
+		Inches? 5.5
+		
+		Tests if the program can handle floating point inputs
+		for Inches
+
+		Correct Output:
+			1 meter, 66 centimeters
+	test4:
+		Feet? -2
+		Inches? 5
+
+		Tests if the program correctly returns an error
+		for a negative input
+
+		Correct Output:
+			Error: input should be nonnegative
+
+    Programming #2 pattern.py:
+
+        test1:
+		First String? 0
+		Second String? V
+		Width? 7
+
+		Tests for odd width creating the right pattern
+		
+		Correct Output:
+			0000000
+			00000VV
+			000VVVV
+			0VVVVVV
+			000VVVV
+			00000VV
+			0000000
+        test2: 
+		First String? 0
+		Second String? V
+		Width? 8
+
+		Tests for even width creating the right pattern
+
+		Correct Output:
+			00000000
+			000000VV
+			0000VVVV
+			00VVVVVV
+			VVVVVVVV
+			00VVVVVV
+			0000VVVV
+			000000VV
+			00000000
+
+        test3:
+		First String? 0
+		Second String? V
+		Width? -1
+
+		Tests if a negative correctly produces an error and
+		end the program
+
+		Correct Output:
+			Please enter a number greater than 0
+			
+	test4: 
+		First String? X
+		Second String? -
+		Width? 1.
+
+		Tests is a decimal input correctly produces an error
+		and ends the program
+
+		Correct Output:
+			Please enter a non-decimal number
+
+    Programming #3 reverse.py:
+
+        test1: 
+		Enter a filename: test1
+	
+			test1-> this is the first test
+				and this is still that test
+
+		Tests if the program opens file test1, and the
+		fucntions run correctly
+
+		Correct Output:
+			reversed_test1
+
+		  reversed_test1 -> tset tsrif eht si siht
+				    tset taht llits si siht dna 
+			
+			
+        test2:
+		Enter a filename: test2
+
+			test2-> this is a test!!
+
+				i skipped a line?
+
+		Tests if the program can handle skipped lines
+
+		Correct Output:
+			reversed_test2
+
+		   reversed_test2-> !!tset a si siht
+					
+				    ?enil a deppiks i
+        test3:
+		Enter a filename: test3
+
+			test3-> space test
+				   will it work?
+
+		Tests if the program handles spaces correctly
+
+		Correct Output: 
+			reversed_test3
+
+		   reversed_test3-> tset ecaps
+				       ?krow ti lliw
+

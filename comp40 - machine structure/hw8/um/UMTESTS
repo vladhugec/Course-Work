@@ -1,0 +1,14 @@
+halt.um
+halt-verbose.um
+add.um
+print-six.um
+emit_cMov_test.um
+emit_cMov_test2.um
+seg_load_test.um
+seg_store_test.um
+multiply_test.um
+division_test.um
+nand_test.um
+map_seg_test.um
+unmap_seg_test.um
+input_output_test.um

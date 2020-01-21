@@ -1,0 +1,69 @@
+cqs.ml.txt
+
+Vladimir Hugec
+Comp105 hw6
+
+1) I need to work on my case analysis, often times my feedback metions
+   missed cases or redundant cases.
+   
+2) (x::y::zs, w)
+
+    (a) ([1, 2, 3], (”COMP”, 105))
+        Yes, x=1, y=2, zs=3, w=(”COMP”, 105) 
+    
+    (b) ((”COMP”, 105), [1, 2, 3]) 
+        No
+    
+    (c) ([(”COMP”, 105)], (1, 2, 3)) 
+        No
+    
+    (d) ([”COMP”, ”105”], true)
+        No
+    
+    (e) ([true, false], 2.718281828)
+        No
+
+3)
+    
+     case f (x, y, z)
+       of []      => raise Empty
+       | w :: ws => if p w then SOME w else NONE
+
+You are told that the subexpression f (x, y, z) has type 'a list. 
+
+(a) The type of the pattern w::ws
+    -> 'a list
+(b) The type of the variable ws 
+    -> 'a list
+(c) The type of the expression SOME w 
+    -> 'a option
+    
+4) (check-expect (foldl + 0 '(1 2 3)) 7)
+
+    Your translation:
+    
+    -> val () =
+            Unit.checkExpectWith
+            (fn () => foldl (+ 0 '(1 2 3))
+            7
+            
+5)
+    a) ev (e as APPLY (5, 5))
+    b) The interpreter will output "Applied non-function" along with the
+       value to the terminal
+    
+6) 
+    a) Free variables of (lambda (x) (lambda (y) (equal? x y)))
+        -> equal?
+        
+    b) Free variables of (lambda (y) (equal? x y))
+        -> equal? x
+    
+    c) Free variables of
+          (lambda (s1 s2)
+            (if (or (atom? s1) (atom? s2))
+              (= s1 s2)
+              (and (equal? (car s1) (car s2))
+                   (equal? (cdr s1) (cdr s2)))))
+                   
+        -> or and = atom? equal? car cdr

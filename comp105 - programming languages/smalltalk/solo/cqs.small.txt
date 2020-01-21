@@ -1,0 +1,76 @@
+1.
+    (div: w 2)
+        receiver = w
+        argument = 2
+        message = div:
+    
+    (drawOn: shape self)
+        receiver = shape
+        argument = self
+        message = drawOn:
+        
+    (do: shapes [block (shape) (drawOn: shape self)])
+        receiver = shapes
+        argument = [block (shape) (drawOn: shape self)]
+        message = do:
+        
+2.
+    a) Nothing, there is only one receiver
+    b) # of colons = # of args
+    
+3.
+    a) empty is a part of the class protocol
+       add: and draw: are parts of instance protocol
+       
+    b) messages in class protocol can be sent to class,
+       they can be used to create a new object. Messages
+       in the instance protocol are those that can be sent to
+       any instance of the class
+       
+4.
+    a) class B
+    b) m2 on class C
+    
+5.
+    a) message sent from class Fraction or Number
+    b) message received by instance of class Fraction or Number
+    
+    Message   Sent from method    Sent to object    Method defined
+              defined on class    of class          on class
+    -          (anywhere)        Fraction            Number
+    +             Number         Fraction            Fraction
+    (negated)    Number          Fraction            Fraction
+    
+6.
+    a)
+        1. sentinel
+        2. new
+        3. new
+        
+    b)
+        1. sends sentinel to class Sequenceble Collection setting sentiel
+        2. sends new to to superclass of List to create an instance of it
+        3. sends new to ListSentinel to create an instance of it
+        
+    c)
+        scenario 1
+        
+7.
+    The role of asInteger is to coerce a Number to be an Integer
+    The role of asFraction is to coerce a Number to be a Fraction
+    The role of asFloat is to coerce a Number to be a Float
+    The role of coerce: is to produce a Number that is of the same
+                        type as the receiver and same value as arg
+                        
+8.
+    B
+    
+9. 
+    a) =, <
+    b) +, *, negated, reciprocal, asInteger, asFraction, asFloat, coerce
+    
+10.
+    a) +, *
+    b) * -> sends multiplyLargePositiveIntegerBy: arg
+
+    

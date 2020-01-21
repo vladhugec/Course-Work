@@ -1,0 +1,73 @@
+pnmscale of 1.2
+-------------------------------
+Rotation of 90
+Map Type: row-major
+Total time: 49300271.000000
+Time per pixel: 91.559608
+Image height: 979
+Image width: 550
+-------------------------------
+-------------------------------
+Rotation of 180
+Map Type: row-major
+Total time: 43907361.000000
+Time per pixel: 81.543989
+Image height: 550
+Image width: 979
+-------------------------------
+-------------------------------
+Rotation of 270
+Map Type: row-major
+Total time: 51264636.000000
+Time per pixel: 95.207793
+Image height: 979
+Image width: 550
+-------------------------------
+-------------------------------
+Rotation of 90
+Map Type: col-major
+Total time: 55584396.000000
+Time per pixel: 103.230376
+Image height: 979
+Image width: 550
+-------------------------------
+-------------------------------
+Rotation of 180
+Map Type: col-major
+Total time: 63613931.000000
+Time per pixel: 118.142689
+Image height: 550
+Image width: 979
+-------------------------------
+-------------------------------
+Rotation of 270
+Map Type: col-major
+Total time: 56343714.000000
+Time per pixel: 104.640568
+Image height: 979
+Image width: 550
+-------------------------------
+-------------------------------
+Rotation of 90
+Map Type: block-major
+Total time: 180367221.000000
+Time per pixel: 334.974874
+Image height: 979
+Image width: 550
+-------------------------------
+-------------------------------
+Rotation of 180
+Map Type: block-major
+Total time: 181785489.000000
+Time per pixel: 337.608857
+Image height: 550
+Image width: 979
+-------------------------------
+-------------------------------
+Rotation of 270
+Map Type: block-major
+Total time: 180193112.000000
+Time per pixel: 334.651522
+Image height: 979
+Image width: 550
+-------------------------------

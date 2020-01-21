@@ -1,0 +1,117 @@
+Mason Pollack and Vladimir Hugec
+COMP-40
+11/13/18
+
+Design checklist for the full Universal Machine:
+
+11. 
+Data loader:
+Sequence to hold segments (which represent programs). Segments are represented 
+by sequences also which store instructions in the form of bitpacked words.
+
+
+Functions contained in Hanson library for sequences that we will likely use:
+Seq_addhi(Seq T, void* val);
+Seq_addlo(Seq T, void* val);
+void *Seq_remlo(Seq T);
+void *Seq_remhi(Seq T);
+void *Seq_get(Seq T, int index);
+void *Seq_put(Seq T, int index, void *value);
+int Seq_length(Seq T);
+void Seq_free(Seq* T);
+T Seq_new(int hint);
+
+
+Functions used from bitpack:
+void Bitpack_newu(uint64_t word, int width, int lsb, int value);
+uint64_t Bitpack_getu(uint64_t word, int width, int lsb);
+
+
+UM ALU:
+Structure that performs UM operations based off input of 1 “instruction” in the
+form of a 32 bit word. Holds values for all registers in register array of
+bitpacked uint32_t words, index of array corresponds to the register number.
+
+
+UM_execute(uint32_t word);
+static inline Um_instruction cMov(Um_register a, Um_register b, Um_register c);
+
+static inline Um_instruction SLoad(Um_register a, Um_register b, 
+                                Um_register c);
+
+static inline Um_instruction SStore(Um_register a, Um_register b,
+                Um_register c);
+
+static inline Um_instruction add(Um_register a, Um_register b, Um_register c);
+
+static inline Um_instruction multiply(Um_register a, Um_register b, 
+                                                Um_register c);
+
+static inline Um_instruction divide(Um_register a, Um_register b, 
+                                        Um_register c);
+
+static inline Um_instruction nand(Um_register a, Um_register b, Um_register c);
+
+static inline Um_instruction halt(void);
+
+static inline Um_instruction map(Um_register b, Um_register c);
+
+static inline Um_instruction unmap(Um_register c);
+
+static inline Um_instruction output(Um_register c);
+
+static inline Um_instruction input(Um_register c);
+
+static inline Um_instruction loadP(Um_register b, Um_register c);
+
+
+12.
+Outer sequence is part of the data loader and holds all segments (programs). 
+Originally, this sequence will use Seq_get along with a segment counter in order
+ to get the current segment (program). If a segment calls another segment, 
+ Seq_get will also be used to extract the new segment. 
+The data loader also has segments which are also represented as sequences, 
+Seq_remlo will be used to pop the next instruction off of the segment.
+The instructions popped off a segment sequence are represented by 32 bit 
+bitpacked words which are passed to the ALU in order to perform the instructions
+
+
+13.
+Originally, test components by;
+* Manually calling ALU functions and checking values of registers and pointers
+Then use umlab.c testing functionality in order to create .um files that can be
+used as input to the UM.
+Files will include:
+* All UM functions by themselves
+* UM functions along with other UM functions
+* Mapping and Unmapping,remapping (using different segments and the same 
+        segment
+* Unmapping non-mapped segment
+* Access non-mapped segment
+* Empty file
+* With values greater than 2^32
+* Division by 0
+* Other file types
+* Random instructions that follow word instruction syntax
+* Single instructions that use a certain register multiple times
+* Loops
+* Test add, mult, divide with known and expected values
+* Make subtraction UM code and test with know and expected values
+
+
+Design checklist for UM segments:
+Representation:
+* Segments are represented by Seq_T objects that hold instructions in the form
+of 32 bit bitpacked words which hold OPCODE, r1,r2 and r3. Where r1, r2 and r3
+are the registers that the function specified by OPCODE is ran with.
+* Invariants:
+   * Segment 0 will always be the object gotten by Seq_get[0] on the outer
+   sequence (sequence that holds the segments).
+   * On the current segment, when Seq_length(segment) = 0, there are no
+   instructions left to be ran inside this segment.
+   * All 8 registers will always be adjacent in memory allowing quick access to
+   all registers (by storing in array)
+   * Number of total instructions in a segment is equal to Seq_length(segment)
+   before removing any instructions
+   * Number of total instructions of all segments is equal to the sum of
+   Seq_length(segment) for all segments

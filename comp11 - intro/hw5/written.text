@@ -1,0 +1,35 @@
+FOR EXTRA CREDIT : I completed the task to uncover all the non-mine squares 
+                    around it, if the square that the user selected is a 
+                    0-square.
+                    I also gave flag, unflag, and select options
+                    program is run like this : 
+                        "Enter.....:" [f,s,u] [row] [col]
+                        i.e. f 4 0 -> flags row4 col0 as mine 
+                    f = flag
+                    s = select 
+                    u = unflag
+
+COMPILING USING -DTESTING
+
+INPUT : 0 0
+    CHECKS : If the game ends due to mine being hit and if the
+        game shows the full board with mines showing after loss
+
+INPUT : 0 1
+    CHECKS : If the game updates tile (0,1) with correct # of
+        surrounding mines (EDGE CASE)
+
+INPUT : 8 0
+    CHECKS : If the game updates tile (0,1) with correct # of
+         surrounding mines (CORNER CASE)
+
+INPUT : 4 4 
+    CHECKS : If the game updates tile (0,1) with correct # of
+         surrounding mines (MID-BOARD CASE)
+
+INPUT : (INPUT EVERYTHING CORRECTLY UNTIL YOU WIN)
+    CHECKS : If the check_for_win() function called at the end
+            of each game loop works
+
+INPUT : 10 6 
+    CHECKS : If check_input() function works

@@ -1,0 +1,19 @@
+#--------------------------------------------------------------------
+#
+#                          writechar macro
+#
+#      Note that it uses only one parameter: p1
+#      Paremeters aren't declared...you just use as many as you need
+#
+#      Also: when the macro is expanded, a temp register must be available
+#      or else the references to rt won't work. There is only one temp
+#      register and it is always named rt. The assembler will susbstitute
+#      whatever is on the temp directive (in this case, r6)
+#
+#--------------------------------------------------------------------
+
+macro writechar
+output  p1                # output using register passed as first parameter
+loadval rt,10             # put newline in temp register
+output  rt
+mend

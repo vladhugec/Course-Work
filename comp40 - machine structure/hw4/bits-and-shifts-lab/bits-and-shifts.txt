@@ -1,0 +1,247 @@
+                   Student Response for COMP 40 Bits-and-Shifts Lab
+
+Please fill in the information below:
+
+Student Name: Vladimir Hugec
+Login: vhugec01
+Date: 10/12/18
+
+To complete the bits-and-shifts-lab, follow the instructions here and
+fill in your responses below. You will submit your edited version of
+this file.
+
+It is assumed that you have already read and worked through the
+introductory steps in
+http://www.cs.tufts.edu/comp/40/labs/bits-and-shifts . If you have
+not, please do so now.
+
+In all of the following questions, all variables are assumed to be of
+signed or unsigned C integral types; we are not asking about floats,
+doubles, pointers, etc.
+
+If you are shaky on hex, then spend some time just entering positive
+and negative numbers into the interpreter, to see what they become in
+hex. Then, try it the other way: enter a hex literal like 0x102 and
+see how it evaluates. note that by default in C, expressions are 32
+bit and signed. Prepare to enter 0xfffffffe, but first guess what the
+decimal equivalent will be. Did you guess right?
+
+Now go on to answer the following questions. You may use the
+c_interpret program to help you figure out the following or to check
+your answers.
+
+===============================================
+        Practice with numbers
+===============================================
+
+Try to figure these out in your head or on paper before confirming
+using the interpreter
+
+Fill in your answer in the space under each question:
+
+* Asssuming variable x is an unsigned integer, what will the
+  expression: x | 1 compute?
+
+  if x % 2 == 0 -> x | 1 == x+1
+  if x % 2 != 0 -> x | 1 == x
+
+ 
+
+
+* Write an expression that will evaluate to "True" (I.e. a nonzero
+  value) if and only if unsigned integer x is odd. You MUST NOT use
+  the mod operator. Good answers will use only a single C operator,
+  but other interesting ones are possible using two or more
+  operators. Do your best. (Hint: think about what even and odd
+  numbers look like in binary.)
+
+        x is odd <-> true
+
+        x & 1
+
+
+
+
+* Would your answer change, and if so how, if x were a signed integer
+  instead of unsigned?
+
+        no, x & 1 works with pos and neg numbers
+
+ 
+===============================================
+        Practice with Hex and Shifts
+===============================================
+
+
+Fill in your answer in the space under each question:
+
+* Give a number in decimal, that is equal to the
+  hex value 0x202.
+  2 = 0010
+  0 = 0000
+  2 = 0010
+
+  1000000010
+  2^9 + 2^1
+  512 + 2
+
+   = 514
+
+* Give a C expression using operators OTHER THAN (+ - * or /) that
+  will multiply the unsigned variable "a" by 16:
+
+  x << 4
+
+  4 << 4 = 64 = 4 * 16
+  3 << 4 = 48 = 3 * 16
+
+* Will the above expression work for a signed variable?
+
+yes,
+
+-4 << 4 = -64 = -4 * 16
+
+
+* Give a C expression using operators OTHER THAN (+ - * or /) that
+  will divide the unsigned variable variable "a" by 16:
+
+  x >> 4
+
+  16 >> 4 = 1 = 16/16
+
+
+* Will the above expression work for a signed variable?
+
+yes,
+
+-16 >> 4 = -1 = -16/16
+
+
+* Give a C expression using operators OTHER THAN (+ - * / or % ) that will
+  yield the remainder when the unsigned variable "a" is divided by 8: 
+
+  x & 3
+
+  9 & 3 = 1 = 9/8 has remainder 1
+  18 & 3 = 2 = 18/8 has remainder 2
+   
+
+===============================================
+              Masks and masking
+===============================================
+
+Assume the following declarations:
+
+  uint16_t width = ...some number between 0 and 31 ...
+  uint16_t lsb   = ......some number between 0 and 31 ...
+  uint32_t bits  = ...some value (bit fields)....
+
+  Assume the same naming conventions as in the arith bitpack
+  assignment. "lsb" identifies the least significant bit of a bit field,
+  with 0 being the "rightmost". "width" gives the number of bits.
+
+* Fill in the expression so that mask has 1 bits in
+  the bit positions lsb -> lsb + width - 1, and zeros everywhere
+  else. For example: if lsb = 4 and width = 8, the hex value
+  of the mask should be: 0x00000ff0 (8 bits starting at position 4).
+
+  If it's easier, you may declare some variables to hold intermediate
+  values first, or you can just do it all on one expression:
+
+
+
+  uint32_t mask = (~0 >> 2*(lsb+width)) << lsb
+
+* Assume the mask above is correctly computed, and that lsb and width
+  are still available. Write an expression (using mask, lsb, and width
+  as appropriate) to extract an unsigned integer of width "width" from
+  position "lsb" in variable data.
+
+  For example: if data = 0x12345678, then for the sample values above,
+  the result would be 0x67 (the 8 bits of data starting at lsb 4).
+
+  Provide your expression below. Note that it should not work only for
+  the sample values 8 and 4, but should work for any values of width,
+  lsb, and bits. Again, you can use the mask value computed above if you
+  like. 
+
+
+  Your expression here: data & mask
+
+
+
+===============================================
+            Named Flags  
+===============================================
+
+In the table in the lab writeup, the following flag definitions are shown:
+
+uint32_t REGISTERED = 0x80000000
+uint32_t EVALUATED = 0x40000000
+uint32_t QUEUED = 0x20000000
+uint32_t DROPPED = 0x10000000
+uint32_t UNDERGRADUATE = 0x080000
+
+These are also available in your cloned directory in the file
+"namedflags.cfrag". So, the following command will read in those
+definitions and then let you evaluable expressions using them:
+
+     c_interpret namedflags.cfrag -       
+
+(Note the '-' at the end; without that, the interpreter won't wait for
+more input from you).
+
+
+Also assume the usual C conventions for True and False; the value 0 is
+false, any other integer value is True. 
+
+* Write a declaration for flags that sets the flags REGISTERED and
+  UNDERGRADUATE, but no others:
+
+    uint32_t flags = UNDERGRADUATE | REGISTERED               
+
+In the following, assume that flags is a uint32_t, but that the flags
+could have any value. For example, when doing the second question
+below, do not assume that the first has already run to turn off the
+UNDERGRADUATE flag. 
+
+
+* Write an expression that evaluates to True if and only if 
+  the UNDERGRADUATE flag is on in flags:
+
+        flags & UNDERGRADUATE
+
+
+* Write an assignment statement that turns off the the REGISTERED in
+  "flags", but leaves all other flags unchanged (
+
+          flags = flags - REGISTERED
+
+
+* Write an expression that evaluates to "True" (any nonzero value) if
+  and only if both the UNDERGRADUATE and DROPPED flags are on.
+
+
+        (falgs & UNDERGRADUATE) && (flags & DROPPED)
+
+
+
+
+
+          =========== END OF QUESTIONS ============
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

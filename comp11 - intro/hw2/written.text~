@@ -1,0 +1,57 @@
+Author: Vladimir Hugec
+Date: Feb 2, 2018
+Assignment: HW2 written.text
+
+Written #1: >>>ls -ltr
+
+Written #2: (a) is correct
+	    In (b) the while loop will never run even when 'Z' is inputed
+	    because the loop checks whether the input was a 'Y' and it checks
+	    if the input was a 'N' but since you cant input both, the program
+	    will accept inputs that are not 'Y' or 'N'
+	    In (c) the while loop will always run whether or not the input was
+	    a 'Y' or an 'N' and thus will keep asking for inputs indefinitly
+	    because the loop checks whether the input was not a 'Y' OR not a
+	    'N' and since one of those will always be True, the loop will
+	    run regardless of the input.
+
+Written #3:
+	    (a) The program set reps=2 then while reps>0 subtract 1 from reps
+		and print the result, repeat. The output for this program
+		would then be: 1
+		Then the while loop runs again, subtracting 1 from the new
+		value reps took (=1), output: 0
+		(The [+ " ")] segment of the program adds nothing to the
+		output that would change it)
+	    (b) This program is just like the last except for a few
+		differences. This program sets reps=0 and counts up by 1 until
+		reps takes the value of 3 at which point it will stop. Also,
+		this program prints the string prior to updating the variable
+		and so the first output would read the initial value of reps
+		: 0
+		Counting from there the program outputs: 1 and then 2
+		Since the program is checking for reps < 3 in the while loop
+		it would noramally not print the final output of: 3
+		But since the last line has the program print the final value
+		of reps (which caused the while loop to close) which was 3,
+		followed by an additional blank line of output.
+	    (c) This program sets reps = 3 and checks whether or not reps>0
+		and if it is, add 1 to the number and print the output.
+		since the first number is already > 0, the program will 
+		continue adding 1 to the previous number forever and ever.
+	    (d) This program is exactly the same as (b) however it omits the
+		print function within the while loop, and so the program will
+		add 1 to initial number of 0 in the background and once it
+		reaches a value of 5 the while loop will break and the program
+		will output the final value of the variable age: 5
+		followed by [+ "\n")] which prints a blank newline following
+		the output of 5
+	    (e) This program omits the print function in the while loop just
+		as in (d) The while loop checks if reps > 5 but sets the
+		initial value at 0 and so the while loop will immediately
+		break. The next line prints the value of the variable age
+		which is still 0, output: 0
+		followed by [+ "\n")] which prints a blank newline following
+		the output of 0
+
+Written #

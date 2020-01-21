@@ -1,0 +1,249 @@
+;;;;;;;;;;;;;;;;;;; COMP 105 IMPCORE ASSIGNMENT ;;;;;;;;;;;;;;;
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise L10
+
+
+;; (log10 m) approximates the value of k in the expression 10^k = m
+;;          given an input m
+
+;; laws:
+;;   (log10 m ) == + (log10 (/ m 10)) 1
+
+(define log10 (m)
+    (if (< m 10)
+        0
+        (+ (log10 (/ m 10)) 1)))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (log10 10) 1)
+        (check-expect (log10 100) 2)
+        (check-expect (log10 495) 2)
+        (check-expect (log10 1005) 3)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise DD
+
+
+;; (double-digit n) for each digit in n, double-digit duplicates the digit
+;;      directly following the original, i.e 111 -> 111111 & 123 -> 112233
+
+;; laws:
+;;    (double-digit n) == (+ (* 10 n) n) where n > 10 
+;;   ...
+;; [optional notes]
+;;        In order to double a single digit number you only need to multiply
+;;        by 10, for a 2 digit number you need to multiply by 10 twice, this
+;;        is where the 100 comes from down below, the component only needs to
+;;        be multiplied by 100 then merged with the next component
+
+(define double-digit (n)
+    (if (< n 10)
+        (+ (* 10 n) n)
+        (+ (+ (* 100 (double-digit (/ n 10))) (mod n 10)) (* 10 (mod n 10)))))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (double-digit 150) 115500)
+        (check-expect (double-digit 99) 9999)
+        (check-expect (double-digit 123) 112233)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise C
+
+
+;; (population-count n) given number n, function returns the number of 1's
+;;                 present in the binary representation of n
+;;                 i.e 15 is 1111 in binary -> function returns 4
+;;                 i.e 14 is 1110 in binary -> function returns 3
+
+;; laws:
+;;   R is Remainder -> R = n - (n/2)*2 -> R = (-(n (* (/ n 2)))
+;;   (population-count n) == SUM(All R)
+;;   ...
+;; [optional notes]
+;;        Pop count is the sum of all the remainders after successive division
+;;        by 2
+
+(define population-count (n)
+    (if (< n 1)
+        0
+        (+ (- n (* (/ n 2) 2))(population-count (/ n 2)))))
+
+        (check-expect (population-count 15) 4)
+        (check-expect (population-count 14) 3)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise 10
+
+
+;; (binary m) given a number m in base 10, converts to base 2 and returns
+
+;; laws:
+;;   (binary 0) == 0
+;;   (binary 1) == 1
+;;   (binary 2) == 10
+;;   (binary 3) == 11
+;;   (binary 4) == 100
+;;   (binary 2) == * binary(/ m 2) 10
+;;   (binary 3) == + binary(2) binary(1) == + (* binary(/ m 2) 10) (mod m 2)
+
+(define binary (m)
+    (if (= m 0)
+        0
+        (+ (mod m 2) (* 10 (binary (/ m 2))))))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (binary 15) 1111)
+        (check-expect (binary 14) 1110)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise 5
+
+
+;; (log b n) solves for the log of n with base of b such that
+;;        b^x <= n & b^(x+1) > n
+
+;; laws:
+;;   (log b b) == 1 == b^1 = b
+;;   (log b n) == b^x = n == (+ (log b (/ n b)) 1)))
+;;   ...
+;; [optional notes]
+;;         similar to the first problem, except instead of dividing by 10
+;;         you divide by the base (which was 10 in first problem)
+
+(define log (b n)
+    (if (<= n b)
+        1
+        (+ (log b (/ n b)) 1)))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (log 3 10) 2)
+        (check-expect (log 6 36) 2)
+        (check-expect (log 6 6) 1)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise 4
+
+
+;; (sigma m n) function returns sum of all numbers between m&n inclusivly
+;;             e.g (sigma 3 6) -> 3 + 4 + 5 + 6 = 18 
+
+;; laws:
+;;   (sigma m m) == m
+;;   (sigma m (- m 1)) == 0
+;;   (sigma m (+ m 1)) == + m (+ m 1)
+;;   (sigma m (+ m 2)) == + (+ m (+ m 1)) (+ m 2)
+
+(define sigma (m n)
+    (if (> m n)
+        0
+        (+ (sigma (+ m 1) n) m)))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (sigma 5 10) 45)
+        (check-expect (sigma 3 6) 18)
+        (check-expect (sigma 10 5) 0)
+        (check-expect (sigma 5 5) 5)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;;  Exercise 8
+
+
+;; (prime? n) given any number n, prime? returns 1 if n is a prime and
+;;            0 if n is not a prime
+
+;; laws:
+;;   (prime? n) == and((mod n x)(mod n x+1)(mod n x+2)...(mod n x*x))
+;;                where x begins at 2 and ends where x*x > n since
+;;                this is the same as saying x > sqrt(n)
+
+(define prime? (n)
+    (if (= n 2)
+        1
+        (if (> n 2)
+            (testFactors n 2)
+            0)))
+            
+;; (testFactors (n x))  given a number n and x (x always starts at 2 since
+;;                 2 is the smallest possible factor) and tests whether x is
+;;                 a factor of n, if no factors are found, return 1 (n is prime)
+;;                 else return 0 (n is not prime)
+
+;; laws:
+;;     (testFactors (n x)) == and((mod n x)(mod n x+1)(mod n x+2)...(mod n x*x))
+
+;; [optional notes]
+;;        the law here is the same as above since I didnt really understand 
+;;        what laws meant for the prime? function since it's only job is to 
+;;        check if the number is 2 or less than 2 and then call testFactors
+
+(define testFactors (n x)
+    (if (> (* x x) n)
+        1
+        (if (= (mod n x) 0)
+            0
+            (testFactors n (+ x 1)))))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (prime? 2) 1)
+        (check-expect (prime? 1) 0)
+        (check-expect (prime? 7) 1)
+        (check-expect (prime? 37) 1)
+        (check-expect (prime? 73) 1)
+        (check-expect (prime? 5) 1)
+        (check-expect (prime? 21) 0)
+        (check-expect (prime? 27644437) 1)
+
+
+;; (nthprime n) given a positive number n, function returns the nth number
+;;                prime with the first one being 2, second is 3 and so on.
+
+;; laws:
+;;   (nthprime ...) == no law, just call and initialize countPrimes 
+
+(define nthprime (n)
+    (if (= n 1)
+        2
+        (countPrimes n 1 1)))
+    
+;; (countPrimes (n c x)) given a position (n) a starting count (c) and a
+;;                starting number (x), counts primes until the position (n)
+;;                equals the count (c) and return the prime (x)
+
+(define countPrimes (n c x)
+        (if (= c n)
+            (- x 2)
+            (if (= (prime? x) 1)
+                (countPrimes n (+ c 1) (+ x 2))
+                (countPrimes n c (+ x 2)))))
+
+        ;; replace next line with good check-expect or check-assert tests
+        (check-expect (nthprime 1) 2)
+        (check-expect (nthprime 2) 3)
+        (check-expect (nthprime 3) 5)
+        (check-expect (nthprime 4) 7)
+        (check-expect (nthprime 21) 73)
+        (check-expect (nthprime 123) 677)
+        
+        

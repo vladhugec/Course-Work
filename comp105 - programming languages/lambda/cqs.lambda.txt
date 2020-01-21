@@ -1,0 +1,50 @@
+1) 
+    a) Helps me notice the mistakes I've made since a lot of the tests
+       I fail are ones I didnt even think of
+    b) There are no negatives that I can think of
+    
+2) 
+    datatype term = VAR of string
+                    LAMBDA of (string * term)
+                    APP of (term * term)
+                    
+3) 
+    a) beta-redex and eta-redex
+    b) beta-redex
+    c)
+        beta-redex -> \str.term term1
+        eta-redec  -> \str.term name
+    d)  
+        beta -> APP(LAMBDA(str, term), term1)
+        eta  -> APP(LAMBDA(str, term), str)
+
+4)
+    (\n.(n(\z.NONZERO))ZERO)(\f.\x.f x)
+    ((\f.\x.f x) (\z.NONZERO)) ZERO
+    (\x.(\z.NONZERO) x) ZERO
+    (\z.NONZERO) ZERO
+    NONZERO
+    
+5)
+    beta -> \str.term term1
+            term1 -> term
+    eta  -> \str.term name
+            term
+            
+6)
+    (\a.a x) (\b.\b.b a)
+    
+7) Church-Numeral?
+
+    \f.x                      -> NO
+    \f.\x.x                   -> YES, 0
+    \f.\x.f                   -> NO
+    \f.\x.f x                 -> YES, 1
+    \x.\x.f (f (f (f (f x)))) -> NO
+    
+
+
+    
+    
+
+                    

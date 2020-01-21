@@ -1,0 +1,141 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 170, Fall 2019
+% Homework 8
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 170}
+\def\subjname{Computation Theory}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 8}
+
+\section{}
+
+Suppose that $END_{1}$ were decidable. Let $M$ be a Turing Machine that decides it. We can use $M$ to construct a Turing Machine that decides $A_{TM}$ as follows:
+
+Input is $\langle X, w \rangle $ where $X$ is Turing Machine code and $w$ is a string.
+
+Construct new Turing Machine $Y$ as follows:
+
+$\bullet$ Input is a binary string, $s$.
+
+$\bullet$ If the start of the string is a $0$ and  the end of the string there is a $1$, accept, else reject.
+
+$\newline$
+
+Run $M$ on input $\langle Y \rangle$, if $M$ accepts, accept, if $M$ rejects, reject.
+
+If $Y$ accepts $s$, we know that $s$ is in the language and vice-versa if $Y$ rejects or loops. Therefore we can say that $M$ decides $A_{TM}$ which is a contradiction since we know that $A_{TM}$ is undecidable and therefore $END_{1}$ must be undecidable.
+
+\pagebreak
+
+\section{}
+
+Suppose that $BLANK_{TM}$ were decidable. Let $M$ be a Turing Machine that decides it. We can use $M$ to construct a Turing Machine that decides $A_{TM}$ as follows:
+
+Input is $\langle X, w \rangle $ where $X$ is Turing Machine code and $w$ is a string.
+
+Construct new Turing Machine $Y$ as follows:
+
+$\bullet$ Input is a binary string, $s$.
+
+$\bullet$ At each character, erase it
+
+$\bullet$ If $s$ ends, accept, else reject.
+
+$\newline$
+
+Run $M$ on input $\langle Y \rangle$, if $M$ accepts, accept, if $M$ rejects, reject.
+
+If $Y$ accepts $s$, we know that $Y$ finished computation with a completely blank tape and vice-versa if $Y$ rejects or loops. Therefore we can say that $M$ decides $A_{TM}$ which is a contradiction since we know that $A_{TM}$ is undecidable and therefore $BLANK_{TM}$ must be undecidable.
+
+\pagebreak
+
+\section{}
+
+\subsection{}
+
+$\indent S \rightarrow XY | YX | \epsilon$
+
+$X \rightarrow ZXZ | a | \epsilon$
+
+$Y \rightarrow ZYZ | b \epsilon$
+
+$Z \rightarrow a | b$
+
+$\newline$ The grammar describes an arbitrary collection of a's and b's in a string $w$, $w \in \lbrace a,b \rbrace$*.
+
+\subsection{}
+
+The following $TM$, $X$, maps from $D$ to our grammer, $L$:
+
+ Input is $\langle M, w \rangle$ where $M$ is a Turing Machine and $w$ is a string in our grammar above:
+ 
+ $\bullet$ Replace each instance of the letter $0$ with $a$, and replace $1$ with $b$. "
+ 
+ $\newline$
+ 
+ What is left on the tape is now $\lbrace a,b \rbrace$*, so we can say $D$ maps to $L$. However since we know, $D$ is not context-free. Claim 1 must be false.
+ 
+ \subsection{}
+ 
+ The following $TM$, $Y$, maps from our grammer, $L$ to $D$:
+
+ Input is $\langle M, w \rangle$ where $M$ is a Turing Machine and $w$ is a string in $D$:
+ 
+ $\bullet$ Replace each instance of the letter $a$ with $0$, and replace $0$ with $1$. "
+ 
+ $\newline$
+ 
+ What is left on the tape is now $\lbrace 0,1 \rbrace$*, so we can say $L$ maps to $D$. However since we know, $L$ is context-free. Claim 2 must be false.
+ 
+ 
+ 
+
+
+
+
+
+
+\enddocument
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

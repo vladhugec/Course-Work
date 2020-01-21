@@ -1,0 +1,116 @@
+-> 3
+3
+-> (+ 4 7)
+11
+-> it
+11
+-> (val x 4)
+4
+-> (+ x x)
+8
+-> (println x)
+4
+4
+-> (val y 5)
+5
+-> (begin (println x) (println y) (* x y))
+4
+5
+20
+-> (begin (print x) (print y) (* x y))
+4520
+-> (if (> y 0) 5 10)
+5
+-> (while (> y 0)
+     (begin
+       (set x (+ x x))
+       (set y (- y 1))))
+0
+-> x
+128
+-> (define add1 (x) (+ x 1))
+add1
+-> (add1 4)
+5
+-> (define double (x) (+ x x))
+double
+-> (double (+ 3 4))
+14
+-> x
+128
+-> (define addx (x y) (set x (+ x y)))
+addx
+-> (addx x 1)
+129
+-> x
+128
+-> (define println-phone (area-code exchange nnnn)
+      (begin (print area-code) (printu 45)
+             (print exchange) (printu 45)
+             (println nnnn)))
+-> (println-phone 607 797 7742)
+607-797-7742
+7742
+-> (addx 17)
+Run-time error: in (addx 17), expected 2 arguments but found 1
+-> (println-phone 2124502027)
+Run-time error: in (println-phone 2124502027), expected 3 arguments but found 1
+-> (val r 0)
+0
+-> (define gcd (m n)
+     (begin
+       (while (!= (set r (mod m n)) 0)
+         (begin
+           (set m n)
+           (set n r)))
+       n))
+-> (gcd 6 15)
+3
+-> (define gcd (m n)
+     (if (= n 0)
+       m 
+       (gcd n (mod m n))))
+-> (use gcd.imp)
+0
+gcd
+All 6 tests passed.
+-> (use triangle.imp)
+triangle
+All 4 tests passed.
+-> (use botched-triangle.imp)
+triangle
+Check-expect failed: expected (triangle 1) to evaluate to 1, but it's 0.
+Check-expect failed: expected (triangle 2) to evaluate to 3, but it's 1.
+Check-expect failed: expected (triangle 3) to evaluate to 6, but it's 3.
+Check-expect failed: expected (triangle 4) to evaluate to 10, but it's 6.
+All 4 tests failed.
+-> (use arith-assertions.imp)
+All 3 tests passed.
+-> (val x 2)          
+2
+-> (define x (y) (+ x y))   ; pushing the boundaries of knowledge... 
+-> (define z (x) (x x))     ; and sanity
+-> (z 4)
+6
+-> (if 1 7 undefined)
+7
+-> (define blowstack (n) (+ 1 (blowstack (- n 1))))
+-> (blowstack 0)
+Run-time error: recursion too deep
+-> (define one-bits (n) (if (= n 0) 0 (+ 1 (* 2 (one-bits (- n 1))))))
+-> (one-bits 30)
+1073741823
+-> (one-bits 31)
+2147483647
+-> (one-bits 32)
+Run-time error: Arithmetic overflow
+-> (|| 1 (println 99))
+1
+-> (or 1 (println 99))
+99
+1
+-> (&& 0 (println 33))
+0
+-> (|| 0 (println 33))
+33
+33

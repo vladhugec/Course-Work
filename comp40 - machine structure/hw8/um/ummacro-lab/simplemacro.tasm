@@ -1,0 +1,38 @@
+#			simplemacro.tasm
+#                   Author: Noah Mendelsohn
+#
+#      This program is an adaptation of simple.tasm. Here we illustrate
+#      the definition and use of a macro
+#
+
+#--------------------------------------------------------------------
+#
+#                          writechar macro
+#
+#      Note that it uses only one parameter: p1
+#      Paremeters aren't declared...you just use as many as you need
+#
+#      Also: when the macro is expanded, a temp register must be available
+#      or else the references to rt won't work. There is only one temp
+#      register and it is always named rt. The assembler will susbstitute
+#      whatever is on the temp directive (in this case, r6)
+#
+#--------------------------------------------------------------------
+
+macro writechar
+output  p1                     # output using register passed as first parameter
+loadval rt,10                  # put newline in temp register
+output  rt
+mend
+
+#--------------------------------------------------------------------
+#                            main
+#--------------------------------------------------------------------
+
+temp r6
+loadval r3,65                  # This is the letter A in ASCII
+writechar r3                   # invoke the macro: p1 is set to r3
+loadval r5,2
+add r3,r3,r5
+writechar r3                   # Output the result of the add
+halt

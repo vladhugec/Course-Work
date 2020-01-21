@@ -1,0 +1,61 @@
+1.
+    map     : L
+    filter  : L
+    exists? : B
+    all?    : B
+    curry   : F
+    uncurry : F
+    foldl   : L
+    foldr   : L
+
+2. 
+    map     : S
+    filter  : M
+    exists? : V
+    all?    : V
+    curry   : V
+    uncurry : V
+    foldl   : M
+    foldr   : M
+    
+3.
+    map     : +
+    filter  : +
+    exists? : +
+    all?    : +
+    curry   : F2
+    uncurry : F2
+    foldl   : +
+    foldr   : +
+    
+4.
+    a) (foldl + 0 '(1 2 3)) = (3 + (2 + (1 + 0))) = 6
+       (foldr + 0 '(1 2 3)) = (1 + (2 + (3 + 0))) = 6
+           YES
+           
+    b) (foldl cons '() '(1 2 3)) = (3 cons (2 cons (1 cons (0)))) = ((((0 1) 2) 3))
+       (foldr cons '() '(1 2 3)) = .... = ((((0 3) 2) 1))
+           NO
+           
+    c) (foldl and #t '(#t #f #t)) = (#t and (#f and (#t and #t))) = #f
+       (foldr and #t) '(#t #f #t)) = .... = #f
+           AND
+           
+    d) (foldl - 0 '(1 2 3 4) = 2
+       (foldr - 0 '(1 2 3 4) = -2
+           SUBTRACT
+           
+5.
+    (flip <) x y) == (> x y)
+    (flip >) x y) == (< x y)
+    (flip <) x y) == (> y x)
+    
+6.
+    ((curry <) m) == (lambda (n) (< m n))           -> Bad
+    ((curry <) m)     == (lambda (n) (< n m))       -> Bad
+    ((curry cons) 10) == (lambda (xs) (cons 10 xs)) -> Good
+    (o odd?  (lambda (n) (* 3 n))) == odd?          -> Bad
+    (o even? (lambda (n) (* 4 n))) == even?         -> Good
+
+
+    

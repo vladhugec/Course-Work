@@ -1,0 +1,302 @@
+// calc40.ums
+//
+// main loop of calculator function, read char until EOF & transfers control
+// to appropriate funcs
+//
+// By: Vladimir Hugec
+// comp40-hw8
+//
+//                r0 -> zero register
+//                r1 -> return addresses (temporary in init jumptable section)
+//                r2 -> stack pointer
+//                r3 -> # things in stack
+//                r4 -> holds input()
+//                r5 -> general / temp
+//                r6 -> general / temp
+//                r7 -> general / temp
+
+.section init
+.zero r0
+.temps r1, r6, r7
+
+jumptable:
+        .space 256
+        r4 := 0
+fill_null_jumptable:
+        r4 := jumptable + r3
+        m[r0][r4] := input_error
+        r3 := r3 + 1
+        if (r3 <s 256) goto fill_null_jumptable
+        r3 := '0'        // to fill digits with corresponding values
+fill_all_digits:
+        r4 := jumptable + r3
+        m[r0][r4] := number
+        r3 := r3 + 1
+        if (r3 <s 58) goto fill_all_digits
+fill_operators:
+        m[r0][jumptable + ' '] := waiting
+        m[r0][jumptable + '\n'] := evaluate
+        m[r0][jumptable + '+'] := add
+        m[r0][jumptable + '-'] := subtract
+        m[r0][jumptable + '*'] := mult
+        m[r0][jumptable + '/'] := div
+        m[r0][jumptable + '|'] := or
+        m[r0][jumptable + '&'] := and
+        m[r0][jumptable + 'c'] := changesign
+        m[r0][jumptable + '~'] := not
+        m[r0][jumptable + 's'] := swap
+        m[r0][jumptable + 'd'] := duplicate
+        m[r0][jumptable + 'p'] := popval
+        m[r0][jumptable + 'z'] := zerostack
+r3 := 0
+goto main
+
+.section text
+.zero r0
+.temps r5, r6, r7
+
+// r4 is input in ascii->convert to dec and push to stack
+// increment stack couter r3 and goto entering state
+number:
+        r4 := r4 - '0'
+        push r4 on stack r2
+        r3 := r3 + 1
+        goto entering
+
+// r4 is input in ascii->convert to dec
+// load value from stack that is to be continued
+// update value in stack
+number_continued:
+        r4 := r4 - '0'
+        r5 := m[r0][r2]
+        r6 := r5 * 10
+        r7 := r6 + r4
+        m[r0][r2] := r7
+        goto entering
+
+// outputs error message and goes to waiting state
+input_error:
+        output "Error invalid input.\n"
+        goto waiting
+waiting:
+        r4 := input()
+waiting_with_char:
+        goto test_input linking r1
+        r1 := jumptable + r4
+        r1 := m[r0][r1]
+        goto r1
+
+// get input and test it for EOF
+// load corresponding action from jumptable into r1
+// if r1 is action "number" goto action number_continued
+entering:
+        r4 := input()
+        goto test_input linking r1
+        r1 := jumptable + r4
+        r1 := m[r0][r1]
+        if (r1 == number) r1 := number_continued
+        goto r1
+        
+// test EOF input
+test_input:        
+        r6 := ~r4
+        if (r6 == r0) goto exit
+        goto r1
+
+// test number of things in stack to see if operation can be executed
+invalid_stack_count:
+        output "Error: invalid number of operands"
+        goto waiting
+        
+// compare # elements in stack with 1, less than 1 -> error
+check1:
+        if (r3 <s 1) goto invalid_stack_count
+        goto r1
+
+// compare # elements in stack with 2, less than 2 -> error
+check2:
+        if (r3 <s 2) goto invalid_stack_count
+        goto r1
+
+evaluate:
+        goto init_print_loop
+        
+// pops 2 values off stack into r1 & r4 respectivly
+// add them and store in r1 -> push on stack and decrement # of things in stack
+add:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        r1 := r1 + r4
+        push r1 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// subtract them and store in r1 -> put on stack -> decrement # things in stack
+subtract:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        r1 := r4 - r1
+        push r1 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// multiply them and store in r1 -> put on stack -> decrement # things in stack
+mult:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        r1 := r1 * r4
+        push r1 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// check if one or other or both are negative -> go to corresponding func
+div:
+        goto check2 linking r1
+        pop r1 off stack r2        //y
+        pop r4 off stack r2        //x
+        push r3 on stack r2        //save stack counter
+        r3 := r0
+        if (r1 == r0) goto div_by_zero
+        
+        //the following is trying to check if inputs are negative
+        //but umasm was buggy and this is the fix that Noah came up with:
+        
+        r5 := 0x80000000
+        r5 := r5 & r1
+        if (r5 != 0) r3 := r3 + 1
+        r5 := 0x80000000
+        r5 := r5 & r4
+        if (r5 != r0) r3 := r3 + 1
+        
+        // end noahs help
+        
+        if (r3 == 2) goto div_by_neg_xy
+        if (r4 <s r0) goto div_by_neg_x
+        if (r1 <s r0) goto div_by_neg_y
+        r4 := r4 / r1
+        pop r3 off stack r2
+        push r4 on stack r2
+        r3 := r3 - 1
+        goto waiting
+        
+// error if division by 0 occurs above
+div_by_zero:
+        output "Error: Division by zero\n"
+        goto waiting
+
+// both are negative, flip signs of both, do division & push on stack
+// decrement # things in stack
+div_by_neg_xy:
+        r1 := -r1
+        r4 := -r4
+        r4 := r4 / r1
+        pop r3 off stack r2
+        push r4 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// 1 is negative, flip its sign, do division & then flip sign of result
+// then push on stack and decrement # things in stack
+div_by_neg_x:
+        r4 := -r4
+        r1 := r4 / r1
+        pop r3 off stack r2
+        r1 := -r1
+        push r1 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// 1 is negative, flip its sign, do division & then flip sign of result
+// then push on stack and decrement # things in stack
+div_by_neg_y:
+        r1 := -r1
+        r4 := r4 / r1
+        pop r3 off stack r2
+        r4 := -r4
+        push r4 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// do logical or and put back on stack, decrement # things in stack
+or:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        r1 := r1 | r4
+        push r1 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// do logical and -> put back on stack, decrement # things in stack
+and:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        r1 := r1 & r4
+        push r4 on stack r2
+        r3 := r3 - 1
+        goto waiting
+
+// pops 1 values off stack into r1
+// flip the sign and put back on stack
+changesign:
+        goto check1 linking r1
+        pop r1 off stack r2
+        r1 := -r1
+        push r1 on stack r2
+        goto waiting
+
+// pops 1 values off stack into r1
+// do logical not and put back on stack
+not:
+        goto check1 linking r1
+        pop r1 off stack r2
+        r1 := ~r1
+        push r1 on stack r2
+        goto waiting
+
+// pops 2 values off stack into r1 & r4 respectivly
+// pushes them back onto stack in reverse order
+swap:
+        goto check2 linking r1
+        pop r1 off stack r2
+        pop r4 off stack r2
+        push r1 on stack r2
+        push r4 on stack r2
+        goto waiting
+
+// pops 1 values off stack into r1
+// push r1 onto stack 2 times and increment # things in stack
+duplicate:
+        goto check1 linking r1
+        pop r1 off stack r2
+        push r1 on stack r2
+        push r1 on stack r2
+        r3 := r3 + 1
+        goto waiting
+
+// pops 1 value off stack, discards, decrement # things in stack
+popval:
+        goto check1 linking r1
+        pop r1 off stack r2
+        r3 := r3 - 1
+        goto waiting
+        
+// loop through stack popping each off, decrementing # things in stack each loop
+zerostack:
+        if (r3 == r0) goto waiting
+        pop r1 off stack r2
+        r3 := r3 - 1
+        goto zerostack
+
+// halts program (called if EOF read)
+exit:
+        halt

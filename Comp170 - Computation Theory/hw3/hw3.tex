@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%
+% Comp 160, Fall 2019
+% Homework 3
+% Author: Vladimir Hugec
+%%%%%%%%%%%%%%%%%%%%%%%
+
+% This portion of the LaTeX document are configuration 
+% You can see it as all the #includes in C++
+\documentclass[12pt]{article}
+
+\usepackage{epsfig}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+
+\usepackage{titlesec}
+\titleformat{\section}
+{\normalfont\Large\bfseries}{Question~\thesection:}{1em}{}
+
+\newlength{\toppush}
+\setlength{\toppush}{2\headheight}
+\addtolength{\toppush}{\headsep}
+
+\def\subjnum{Comp 170}
+\def\subjname{Computation Theory}
+
+\def\doheading#1#2#3{\vfill\eject\vspace*{-\toppush}%
+  \vbox{\hbox to\textwidth{{\bf} \subjnum: \subjname \hfil Vladimir Hugec}%
+    \hbox to\textwidth{{\bf} Tufts University, Fall 2019 \hfil#3\strut}%
+    \hrule}}
+
+
+\newcommand{\htitle}[1]{\vspace*{1.25ex plus 1ex minus 0ex}%
+\begin{center}
+{\large\bf #1}
+\end{center}} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\doheading{2}{title}{Homework 3}
+
+\section{}
+
+$L_{neq} = \{w |$ w contains a different number of a’s, b’s, and c’s\}
+
+\begin{proof}
+
+
+Suppose $L_{neq}$ is a regular language. Let $p$ be the pumping length as defined by the Pumping Lemma. Let $w=a^j b^k c^l$, s.t. $j \neq k \neq l$. 
+
+By pumping lemma, all words in the language longer than p can be pumped, $|w| \geq p$. Let $j= 2$, $k = 1$, and $l =3$ arbitrarily. And so $w = aabccc$. 
+
+Divide the string, $w$ into parts $xyz$ s.t. $|xy| \leq p$ as follows: $x|y|z = aa|b|ccc$. Therefore by pumping lemma if $xyz \in L_{neq}$ then $xy^i z \in L_{neq}$ $\forall i \geq 0$. 
+
+However, if we let $i=2$, then we have $xy^2 z = aa|bb|ccc$. However  $xy^2 z \notin L_{neq}$ since there are the same number of a's as well as b's.
+
+There are two other possible ways to divide $w$ in $xyz$. $x|y|z = a|ab|ccc$ and $x|y|z = aa|bc|cc$. In both cases $xyz \notin L_{neq}$. In the former division, if we let $i=2$, then we have $xy^2 z = a|abab|ccc$, where the string contains an equal number of a's and c's. And in the latter division, if we let $i=2$ again, then we have $xy^2 z = aa|bcbc|cc$, where the string contains an equal number of a's and b's.
+
+Therefore, no matter how the string $w$ is divided into $xyz$, there exist contradictions to the pumping lemma and therefore $L_{neq}$ is not regular. And since it is know that languages are closed under complement, the complement of $L_{neq}$ is also an irregular language
+
+\end{proof}
+
+\pagebreak
+
+\section{}
+
+$\indent L_{\geq} = \{w1w2 |$ $w2=b^n,n \geq 1$, and $w1 \in \Sigma^*$ contains $m \geq n $ a’s\} 
+
+$L_{\leq} = \{w1w2 |$ $w2=b^n,n \geq 1$, and $w1 \in \Sigma^*$ contains $m \leq n $ a’s\} 
+
+\subsection{A}
+
+I could not figure out how to do a RegEx for this language. I felt like I've tried everything. Im not sure how on earth you limit the number of succeeding b's to be at most the number of a's present.
+
+\subsection{B}
+
+Suppose $L_{\leq}$ is a regular language. Let $p$ be the pumping length as defined by the Pumping Lemma. 
+
+By pumping lemma, all words in the language longer than p can be pumped, $|w| \geq p$. Let $w = abaabb$ arbitrarily. 
+
+Divide the string, $w$ into parts $xyz$ s.t. $|xy| \leq p$ as follows: $x|y|z = ab|a|abb$. Therefore by pumping lemma if $xyz \in L_{\leq}$ then $xy^i z \in L_{\leq}$ $\forall i \geq 0$. 
+
+However, if we let $i=3$, then we have $xy^2 z = ab|aaa|abb$. However  $xy^2 z \notin L_{\leq}$ since the number of a's exceeds the number of succeeding b's.
+
+There are other possible ways to divide $w$ in $xyz$. $x|y|z = aba|ab|b$. If we let $i=2$ here, we see that, once again, the number of a's exceeds the number of succeeding b's: $x|y^2|z = aba|abab|b$. Similarly, if we divide, $x|y|z = a|baa|bb$ and let $i=2$ again we see the same problem. No matter how this string gets divided there exist contradictions to the pumping lemma and therefore $L_{\leq}$ is not regular.
+
+
+\pagebreak
+
+\section{}
+
+$L_{*} = \{w1*w2=w3 |$ w1, w2, and w3 are binary numbers, and w3 is the product of w1 and w2\}
+
+\begin{proof}
+
+Suppose $L_{*}$ is regular.  Let $p$ be the pumping length as defined by the Pumping Lemma. 
+
+By pumping lemma, all words in the language longer than p can be pumped, $|w| \geq p$  Let $w = 1*10=10$ arbitrarily. 
+
+Divide the string, $w$ into parts $xyz$ s.t. $|xy| \leq p$: $x|y|z = 1*|10|=10$. Therefore by pumping lemma if $xyz \in L_{*}$ then $xy^i z \in L_{*}$ $\forall i \geq 0$. 
+
+However, if we simply let $i=2$, then we have $xy^2 z = 1*|1010| = 10$. However  $xy^2 z \notin L_{*}$ since this is not a valid binary multiplication.
+
+Therefore, the language $L_{*}$ is not regular.
+
+\end{proof}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

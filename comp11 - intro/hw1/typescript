@@ -1,0 +1,33 @@
+Script started on Sat 27 Jan 2018 03:08:46 PM EST
+vm-hw08{vhugec01}23: hostname
+vm-hw08.eecs.tufts.edu
+vm-hw08{vhugec01}24: who
+lwalto01 pts/0        2018-01-27 12:50 (209-6-95-192.s3006.c3-0.smr-ubr1.sbo-smr.ma.cable.rcncustomer.com)
+xinying  pts/1        2018-01-27 13:51 (static-71-243-123-241.bos.east.verizon.net)
+krose02  pts/5        2018-01-27 14:15 (10.245.166.53)
+wmayer01 pts/6        2018-01-27 14:41 (10.247.141.227)
+kwalsh07 pts/7        2018-01-27 14:49 (10.245.169.198)
+vhugec01 pts/8        2018-01-27 15:08
+ebloom03 pts/9        2018-01-27 13:20 (10.245.164.180)
+vhugec01 pts/10       2018-01-27 14:58 (10.245.158.6)
+vm-hw08{vhugec01}25: w
+ 15:08:54 up 16 days, 22:18,  8 users,  load average: 0.13, 0.07, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+lwalto01 pts/0    209-6-95-192.s30 12:50    4:22   0.31s  0.31s -tcsh
+xinying  pts/1    static-71-243-12 13:51    2:54   0.25s  0.25s -tcsh
+krose02  pts/5    10.245.166.53    14:15    2:46   0.21s  0.21s -tcsh
+wmayer01 pts/6    10.247.141.227   14:41    1:10   0.41s  0.23s emacs
+kwalsh07 pts/7    10.245.169.198   14:49   18:22   0.11s  0.11s -tcsh
+vhugec01 pts/8                     15:08    6.00s  0.08s  0.03s w
+ebloom03 pts/9    10.245.164.180   13:20    1:19m  0.81s  0.67s emacs ArrayList
+vhugec01 pts/10   10.245.158.6     14:58    6.00s  0.13s  0.00s script
+vm-hw08{vhugec01}26: pwd
+/h/vhugec01/Desktop/comp11/hw1
+vm-hw08{vhugec01}27: ls - l[K;[Kl
+total 4
+-rw-------. 1 vhugec01 games 568 Jan 27 15:02 digits.py
+-rw-------. 1 vhugec01 games   0 Jan 27 15:08 typescript
+vm-hw08{vhugec01}28: exit
+exit
+
+Script done on Sat 27 Jan 2018 03:09:08 PM EST

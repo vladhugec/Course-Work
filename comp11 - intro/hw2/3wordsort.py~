@@ -1,0 +1,44 @@
+###
+###  3wordsort.cpp
+###  program to print out three words in alpha order
+###
+###  usage:   ./3wordsort
+###  input:   three words
+###  output:  the three words in alphabetical order, separated by spaces
+###  note:    Do not prompt the user; Do not print explanations on output.
+###           In fact, don't modify main.
+### 
+### modified by:  yourname here
+### modified on:  date of completion
+###
+
+def main():
+    word1, word2, word3 = input().split()
+
+    printInOrder(word1, word2, word3)  # function does not return anything
+
+#
+# printInOrder
+#
+# prints out the three given words in alphabetical order
+# with a single space separating them.
+# return nothing
+#
+
+    # alphabetize 3 words
+def printInOrder(str1, str2, str3):
+    if str1 > str2 > str3:
+        print(str3 + ' ' + str2 + ' ' + str1 + '\n')
+    elif str1 > str3 > str2:
+        print(str2 + ' ' + str3 + ' ' + str1 + '\n')
+    elif str2 > str1 > str3:
+        print(str3 + ' ' + str1 + ' ' + str2 + '\n')
+    elif str2 > str3 > str1:
+        print(str1 + ' ' + str3 + ' ' + str2 + '\n')
+    elif str3 > str1 > str2:
+        print(str2 + ' ' + str1 + ' ' + str3 + '\n')
+    elif str3 > str2 > str1:
+        print(str1 + ' ' + str2 + ' ' + str3 + '\n')
+
+if __name__ == '__main__':
+    main()

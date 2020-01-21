@@ -1,0 +1,13 @@
+;; function (test-set x)
+;; will attempt to set variable that has not been declared yet
+
+(define test-set (x) 
+        (set x 1)) ;; will cause runtime error in standard impcore
+
+(test-set x)
+
+;; if the variable is made locally, this will print out 0 since it is undefined
+;; outside of test-set, if it is made globally, it will print 1 since it was
+;; set by test-set and was defined and accesable outside the function
+
+(print x)
